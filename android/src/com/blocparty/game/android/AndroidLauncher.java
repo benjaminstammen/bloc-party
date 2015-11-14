@@ -7,6 +7,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.blocparty.game.ActionResolver;
 import com.blocparty.game.BlocParty;
+import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 
 public class AndroidLauncher extends AndroidApplication implements ActionResolver, GameHelper.GameHelperListener {
@@ -71,7 +72,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void unlockAchievementGPGS(String achievementId) {
-
+        Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
 	}
 
 	@Override
