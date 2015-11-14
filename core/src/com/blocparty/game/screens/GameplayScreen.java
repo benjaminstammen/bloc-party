@@ -30,7 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.blocparty.game.utilities.GameClickListener;
 
-public class MainScreen implements Screen {
+public class GameplayScreen implements Screen {
 
     Stage stage;
     Skin skin;
@@ -42,7 +42,7 @@ public class MainScreen implements Screen {
     private final static int BTN_PANEL_BOTTOM = 200;
 
 
-    public MainScreen() {
+    public GameplayScreen() {
         makeItFit();
     }
 
