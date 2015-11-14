@@ -7,7 +7,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.blocparty.game.ActionResolver;
 import com.blocparty.game.BlocParty;
 
-public class AndroidLauncher extends AndroidApplication implements ActionResolver {
+public class AndroidLauncher extends AndroidApplication implements ActionResolver {//, GameHelperListener {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
