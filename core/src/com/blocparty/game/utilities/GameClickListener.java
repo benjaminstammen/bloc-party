@@ -21,19 +21,29 @@ public class GameClickListener extends InputAdapter {
     @Override
     public boolean touchUp (int x, int y, int pointer, int button) {
 
-        //System.out.println("up");
+        
+    	y = Gdx.graphics.getHeight() - y;
+    	
+    	
+    	System.out.println("up");
         
     	
     	//int radius = GameplayScreen.boxWidth / 2;
     	
-    	for (Box b : GameplayScreen.boxes) {
-    		int centerX = b.column * GameplayScreen.boxWidth + GameplayScreen.boxWidth / 2;
-    		int centerY = b.row * GameplayScreen.boxHeight + GameplayScreen.boxHeight / 2;
-    		int radius = b.circleRadius;
-    		
-    		if ((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) < radius*radius) {
-    			System.out.println(b.row);
-    			System.out.println(b.column);
+    	//this can be made more efficient with mod
+    	for (Box[] boxRC : GameplayScreen.boxes) {
+    		for (Box b : boxRC) {
+    			int centerX = b.column * GameplayScreen.boxWidth + GameplayScreen.boxWidth / 2;
+        		int centerY = b.row * GameplayScreen.boxHeight + GameplayScreen.boxHeight / 2;
+        		int radius = b.circleRadius;
+        		
+        		if ((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) < radius*radius) {
+        			System.out.println(b.row);
+        			System.out.println(b.column);
+        			if (b.hasCircle) {
+        				b.hasCircle = false;
+        			}
+        		}
     		}
     	}
     	
