@@ -21,35 +21,47 @@ public class GameClickListener extends InputAdapter {
     @Override
     public boolean touchUp (int x, int y, int pointer, int button) {
 
-        //System.out.println("up");
+        
+    	y = Gdx.graphics.getHeight() - y;
+    	
+    	
+    	//System.out.println("up");
         
     	
     	//int radius = GameplayScreen.boxWidth / 2;
     	
-    	for (Box b : GameplayScreen.boxes) {
-    		int centerX = b.column * GameplayScreen.boxWidth + GameplayScreen.boxWidth / 2;
-    		int centerY = b.row * GameplayScreen.boxHeight + GameplayScreen.boxHeight / 2;
-    		int radius = b.circleRadius;
-    		
-    		if ((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) < radius*radius) {
-    			System.out.println(b.row);
-    			System.out.println(b.column);
+    	boolean hitCircle = false;
+    	
+    	//this can be made more efficient with mod
+    	for (Box[] boxRC : GameplayScreen.boxes) {
+    		for (Box b : boxRC) {
+    			int centerX = b.column * GameplayScreen.boxWidth + GameplayScreen.boxWidth / 2;
+        		int centerY = b.row * GameplayScreen.boxHeight + GameplayScreen.boxHeight / 2;
+        		float radius = b.circleRadius;
+        		
+        		if ((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) < radius*radius) {
+        			//System.out.println(b.row);
+        			//System.out.println(b.column);
+        			
+        			//clicked a circle
+        			if (b.hasCircle && !GameplayScreen.gameOver) {
+        				b.hasCircle = false;
+        				
+        				GameplayScreen.score++;
+        				GameplayScreen.updateScoreLabel();
+        				
+        				hitCircle = true;
+        				
+        				//System.out.println(GameplayScreen.score);
+        			}
+        		}
     		}
     	}
     	
-        
+        if (!hitCircle) {
+        	GameplayScreen.gameOver = true;
+        }
 
         return false;
     }
-
-
-    private void validClick(int x, int y) {
-//		Grid gr = Grid.getInstance();
-//		Block clickedBlock = gr.getClosestBlock(x, y);
-//		if (!round.currentPlayer.isNPC) {
-//			round.blockClicked(clickedBlock);
-//		}
-    }
-	/**/
-
 }
