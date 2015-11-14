@@ -35,14 +35,29 @@ public class GameplayScreen implements Screen {
     public static int boxWidth;
     public static int boxHeight;
     
-    public static ArrayList<Box> boxes;
-    //Box[][] thing;
+    //public static ArrayList<Box> boxes;
+    //row, column
+    public static Box[][] boxes;
+    
+    
+    //boolean adjusting = false;
+	//float skyTime = 0.0f;
+	//float transparencyAchieved = 0.0f;
+    float nextCircleTime;
+    float timeSoFar;
+    float speed;
+    
+    private static final int ROW_COUNT = 2;
+    private static final int COLUMN_COUNT = 4;
+    
+    
     
     public class Box {
     	public int row;
     	public int column;
     	
     	public int circleRadius = 20;
+    	public boolean hasCircle = false;
     }
     
 
@@ -69,22 +84,64 @@ public class GameplayScreen implements Screen {
 
         
         
-        for (int i = 0; i < 4; i++) {
-        	for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < COLUMN_COUNT; i++) {
+        	for (int j = 0; j < ROW_COUNT; j++) {
         		shapeBatch.rect(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
         	}
         }
         
-
-
         shapeBatch.end();
-
-
-
+        shapeBatch.begin(ShapeType.Filled);
+        
+        for (int c = 0; c < COLUMN_COUNT; c++) {
+        	for (int r = 0; r < ROW_COUNT; r++) {
+        		if (boxes[r][c].hasCircle) {
+        			int x = c*boxWidth + boxWidth/2;
+        			int y = r*boxHeight + boxHeight/2;
+        			
+        			shapeBatch.circle(x, y, boxes[r][c].circleRadius);
+        		}
+        	}
+        }
+        
+        
+        
+        shapeBatch.end();
+        
+        
+        
+        timeSoFar += Gdx.graphics.getDeltaTime();
+        if (timeSoFar > nextCircleTime) {
+        	//spawn the new circle
+        	//System.out.println("spawn");
+        	spawnCircle();
+        	
+        	
+        	
+        	//reset timers
+        	timeSoFar = 0;
+        	//time is 1.0 -> 2.0s?
+        	nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
+        }
+        
+        
+        
 //		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 //		stage.draw();
     }
-
+    
+    
+    private void spawnCircle() {
+    	int column = (int) (Math.random() * 4);
+    	int row = (int) (Math.random() * 2);
+    	
+    	if (!boxes[row][column].hasCircle) {
+    		boxes[row][column].hasCircle = true;
+        	boxes[row][column].circleRadius = 60;
+    	}
+    }
+    
+    
     private void makeItFit() {
 
 
@@ -97,19 +154,21 @@ public class GameplayScreen implements Screen {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        boxWidth = width / 4;
-        boxHeight = height / 2;
+        boxWidth = width / COLUMN_COUNT;
+        boxHeight = height / ROW_COUNT;
         
         
         
         
-        boxes = new ArrayList<Box>();
-        for (int i = 0; i < 4; i++) {
-        	for (int j = 0; j < 2; j++) {
+        //boxes = new ArrayList<Box>();
+        boxes = new Box[2][4];
+        for (int i = 0; i < COLUMN_COUNT; i++) {
+        	for (int j = 0; j < ROW_COUNT; j++) {
         		Box b = new Box();
         		b.row = j;
         		b.column = i;
-        		boxes.add(b);
+        		//boxes.add(b);
+        		boxes[j][i] = b;
         	}
         }
         
