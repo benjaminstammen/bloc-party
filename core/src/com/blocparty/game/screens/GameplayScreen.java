@@ -31,8 +31,13 @@ public class GameplayScreen implements Screen {
     SpriteBatch batch;
     ShapeRenderer shapeBatch;
 
-    private final static int BTN_PANEL_LEFT_MARGIN = 200;
-    private final static int BTN_PANEL_BOTTOM = 200;
+    public static int INTENDED_WIDTH = 950;
+    public static int INTENDED_HEIGHT = 500;
+    
+    float minScale = 1.0f;
+	float maxScale = 1.0f;
+    
+    
 
     private int width;
     private int height;
@@ -244,7 +249,25 @@ public class GameplayScreen implements Screen {
     private void makeItFit() {
 
 
-        batch = new SpriteBatch();
+        
+    	
+    	
+    	float scaleW = Gdx.graphics.getWidth() / INTENDED_WIDTH;
+    	float scaleH = Gdx.graphics.getHeight() / INTENDED_HEIGHT;
+    	
+    	
+    	if (scaleW < scaleH) {
+    		minScale = scaleW;
+    		maxScale = scaleH;
+    	} else {
+    		minScale = scaleH;
+    		maxScale = scaleW;
+    	}
+    	
+    	
+    	
+    	
+    	batch = new SpriteBatch();
         shapeBatch = new ShapeRenderer();
 
         //hud = GameScreenHUD.create(round);
