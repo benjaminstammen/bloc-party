@@ -65,9 +65,18 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		}
 	}
 
+    @Override
+    public void gameOver(int score)
+    {
+        if (getSignedInGPGS()) {
+            submitScoreGPGS(score);
+            if (score >= 50) unlockAchievementGPGS(Constants.GET_50);
+        }
+    }
+
 	@Override
 	public void submitScoreGPGS(int score) {
-
+        Games.Leaderboards.submitScore(gameHelper.getApiClient(), Constants.LEADERBOARD_ID, score);
 	}
 
 	@Override
@@ -77,8 +86,8 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void getLeaderboardGPGS() {
-		if (gameHelper.isSignedIn())
-		{
+		if (gameHelper.isSignedIn()) {
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), Constants.LEADERBOARD_ID), 100);
 		} else if (!gameHelper.isConnecting()) {
 			loginGPGS();
 		}
