@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.blocparty.game.screens.GameplayScreen.Box;
 import com.blocparty.game.utilities.GameClickListener;
@@ -53,6 +54,8 @@ public class GameplayScreen implements Screen {
     private static final int COLUMN_COUNT = 4;
     
     public static int score = 0;
+    
+    public static Label scoreLabel;
     
     
     public class Box {
@@ -97,8 +100,8 @@ public class GameplayScreen implements Screen {
         
         
         
-//		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-//		stage.draw();
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.draw();
     }
     
     
@@ -174,6 +177,11 @@ public class GameplayScreen implements Screen {
     }
     
     
+    public static void updateScoreLabel() {
+    	scoreLabel.setText("Score: " + score);
+    }
+    
+    
     private void makeItFit() {
 
 
@@ -206,10 +214,6 @@ public class GameplayScreen implements Screen {
         
         
 
-
-
-
-
         
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -218,7 +222,14 @@ public class GameplayScreen implements Screen {
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(new GameClickListener());
         Gdx.input.setInputProcessor(multiplexer);
-
+        
+        
+        scoreLabel = new Label("Score: 0", skin);
+        scoreLabel.setPosition(20, height - 40);
+        //score.setPosition(20, 20);
+        stage.addActor(scoreLabel);
+        
+        
     }
 
 
