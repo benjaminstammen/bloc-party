@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.blocparty.game.ActionResolver;
 import com.blocparty.game.BlocParty;
 
 public class LeaderboardScreen implements Screen {
@@ -17,14 +18,16 @@ public class LeaderboardScreen implements Screen {
 	Stage stage;
 	Skin skin;
 
+	private ActionResolver actionResolver;
 
+	private LeaderboardScreen(ActionResolver resolver) {
+		actionResolver = resolver;
+		//singleton
+	}
 
 	public LeaderboardScreen() {
 		makeItFit();
-
-
-	//	startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-	//			LEADERBOARD_ID), REQUEST_LEADERBOARD);
+		this.actionResolver.getLeaderboardGPGS();
 	}
 	
 	@Override
@@ -48,8 +51,8 @@ public class LeaderboardScreen implements Screen {
 
 
 		TextButton levelScreen = new TextButton("Back to Main Menu", skin);
-		//x, y, width, height
 		levelScreen.setBounds(100, 100, 200, 40);
+		levelScreen.getLabel().setFontScale(2,2);
 		stage.addActor(levelScreen);
 		levelScreen.addListener(new ChangeListener() {
 			@Override

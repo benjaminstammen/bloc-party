@@ -51,6 +51,7 @@ public class MenuScreen implements Screen {
 		table.setDebug(true);
 
 		playButton = new TextButton("Play", skin);
+		playButton.getLabel().setFontScale(2,2);
 		playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -59,6 +60,7 @@ public class MenuScreen implements Screen {
 		});
 
 		leadButton = new TextButton("Leaderboard", skin);
+		leadButton.getLabel().setFontScale(2,2);
 		leadButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -67,6 +69,7 @@ public class MenuScreen implements Screen {
 		});
 
 		quitButton = new TextButton("Exit", skin);
+		quitButton.getLabel().setFontScale(2,2);
 		quitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
