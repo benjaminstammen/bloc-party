@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.blocparty.game.screens.GameplayScreen.Box;
 import com.blocparty.game.utilities.GameClickListener;
 
 
@@ -46,6 +47,7 @@ public class GameplayScreen implements Screen {
     float nextCircleTime;
     float timeSoFar;
     float speed;
+    float totalTime = 0;
     
     private static final int ROW_COUNT = 2;
     private static final int COLUMN_COUNT = 4;
@@ -56,7 +58,7 @@ public class GameplayScreen implements Screen {
     	public int row;
     	public int column;
     	
-    	public int circleRadius = 20;
+    	public float circleRadius = 20.0f;
     	public boolean hasCircle = false;
     }
     
@@ -76,6 +78,28 @@ public class GameplayScreen implements Screen {
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        
+        
+        //float delta = Gdx.graphics.getDeltaTime();
+        
+//        for (Box[] boxRC : GameplayScreen.boxes) {
+//    		for (Box b : boxRC) {
+//        		
+//    			if (b.hasCircle) {
+//    				//System.out.println(delta * 5.0f);
+//    				b.circleRadius += delta * 30.0f;
+//    			}
+//    			
+//    		}
+//    	}
+        
+        
+        
+        
+        
+        
+        
+        
 
         shapeBatch.begin(ShapeType.Line);
 
@@ -99,6 +123,7 @@ public class GameplayScreen implements Screen {
         			int x = c*boxWidth + boxWidth/2;
         			int y = r*boxHeight + boxHeight/2;
         			
+        			//TODO
         			shapeBatch.circle(x, y, boxes[r][c].circleRadius);
         		}
         	}
@@ -110,6 +135,9 @@ public class GameplayScreen implements Screen {
         
         
         
+        
+        float delta = Gdx.graphics.getDeltaTime();
+        totalTime += Gdx.graphics.getDeltaTime();
         timeSoFar += Gdx.graphics.getDeltaTime();
         if (timeSoFar > nextCircleTime) {
         	//spawn the new circle
@@ -124,6 +152,20 @@ public class GameplayScreen implements Screen {
         	nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
         }
         
+        //update size of each circle
+        for (Box[] boxRC : GameplayScreen.boxes) {
+    		for (Box b : boxRC) {
+        		
+    			if (b.hasCircle) {
+    				//System.out.println(delta * 5.0f);
+    				//TODO
+    				//b.circleRadius += delta * 30.0f;
+    				b.circleRadius = b.circleRadius + delta * 10.0f;
+    			}
+    			
+    		}
+    	}
+        
         
         
 //		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -137,7 +179,7 @@ public class GameplayScreen implements Screen {
     	
     	if (!boxes[row][column].hasCircle) {
     		boxes[row][column].hasCircle = true;
-        	boxes[row][column].circleRadius = 60;
+        	boxes[row][column].circleRadius = 30;
     	}
     }
     
