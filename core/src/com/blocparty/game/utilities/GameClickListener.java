@@ -30,6 +30,8 @@ public class GameClickListener extends InputAdapter {
     	
     	//int radius = GameplayScreen.boxWidth / 2;
     	
+    	boolean hitCircle = false;
+    	
     	//this can be made more efficient with mod
     	for (Box[] boxRC : GameplayScreen.boxes) {
     		for (Box b : boxRC) {
@@ -42,11 +44,13 @@ public class GameClickListener extends InputAdapter {
         			//System.out.println(b.column);
         			
         			//clicked a circle
-        			if (b.hasCircle) {
+        			if (b.hasCircle && !GameplayScreen.gameOver) {
         				b.hasCircle = false;
         				
         				GameplayScreen.score++;
         				GameplayScreen.updateScoreLabel();
+        				
+        				hitCircle = true;
         				
         				//System.out.println(GameplayScreen.score);
         			}
@@ -54,19 +58,10 @@ public class GameClickListener extends InputAdapter {
     		}
     	}
     	
-        
+        if (!hitCircle) {
+        	GameplayScreen.gameOver = true;
+        }
 
         return false;
     }
-
-
-    private void validClick(int x, int y) {
-//		Grid gr = Grid.getInstance();
-//		Block clickedBlock = gr.getClosestBlock(x, y);
-//		if (!round.currentPlayer.isNPC) {
-//			round.blockClicked(clickedBlock);
-//		}
-    }
-	/**/
-
 }
