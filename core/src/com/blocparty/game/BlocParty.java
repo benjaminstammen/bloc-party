@@ -10,13 +10,12 @@ public class BlocParty extends Game {
 
 	private static BlocParty GAME = null;
 
-	private BlocParty() {
+	private BlocParty(ActionResolver resolver) {
 		//singleton
 	}
-
-	public static BlocParty getInstance() {
+	public static BlocParty getInstance(ActionResolver resolver) {
 		if (GAME == null) {
-			GAME = new BlocParty();
+			GAME = new BlocParty(resolver);
 		}
 		return GAME;
 	}
