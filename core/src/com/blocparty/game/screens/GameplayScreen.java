@@ -15,8 +15,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.blocparty.game.BlocParty;
 import com.blocparty.game.screens.GameplayScreen.Box;
 import com.blocparty.game.utilities.GameClickListener;
 
@@ -57,6 +59,9 @@ public class GameplayScreen implements Screen {
     
     public static Label scoreLabel;
     
+    public static boolean gameOver = false;
+    public static boolean gameOverPrompted = false;
+    
     
     public class Box {
     	public int row;
@@ -68,7 +73,21 @@ public class GameplayScreen implements Screen {
     
 
 
+    
+    private void resetValues() {
+    	gameOver = false;
+		gameOverPrompted = false;
+		score = 0;
+		
+		totalTime  = 0;
+		nextCircleTime = 0;
+		timeSoFar = 0;
+		//speed =?
+    }
+    
     public GameplayScreen() {
+    	resetValues();
+    	
         makeItFit();
     }
 
@@ -92,12 +111,20 @@ public class GameplayScreen implements Screen {
         
         float delta = Gdx.graphics.getDeltaTime();
         
-        updateTimes(delta);
+        //updateTimes(delta);
+        
+        if (!gameOver) {
+        	updateSpawnTimes(delta);
+        	growCircles(delta);
+        }
         
         
-        growCircles(delta);
+        checkCircleSize();
         
         
+        if (gameOver && !gameOverPrompted) {
+        	gameOverPrompt();
+        }
         
         
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -136,7 +163,7 @@ public class GameplayScreen implements Screen {
         shapeBatch.end();
     }
     
-    private void updateTimes(float delta) {
+    private void updateSpawnTimes(float delta) {
         totalTime += Gdx.graphics.getDeltaTime();
         timeSoFar += Gdx.graphics.getDeltaTime();
         if (timeSoFar > nextCircleTime) {
@@ -180,6 +207,38 @@ public class GameplayScreen implements Screen {
     public static void updateScoreLabel() {
     	scoreLabel.setText("Score: " + score);
     }
+    
+    
+    private void checkCircleSize() {
+    	for (Box[] boxRC : GameplayScreen.boxes) {
+    		for (Box b : boxRC) {
+    			if (b.hasCircle) {
+    				if (b.circleRadius > boxWidth / 2) {
+    					gameOver = true;
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    private void gameOverPrompt() {
+    	gameOverPrompted = true;
+    	
+    	Dialog prompt = new Dialog("Game Over", skin, "dialog") {
+			protected void result (Object object) {
+				//GameClass.getInstance().setScreen(new LevelSelectScreen());
+				//System.gc();
+				BlocParty.getInstance().setScreen(new MenuScreen());
+//				gameOver = false;
+//				gameOverPrompted = false;
+			}
+		};
+		prompt.text("Score: " + score);
+		prompt.button("OK", null);
+		prompt.show(stage);
+		prompt.setSize(200f, 100f);
+    }
+    
     
     
     private void makeItFit() {
