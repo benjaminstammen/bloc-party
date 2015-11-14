@@ -52,6 +52,7 @@ public class GameplayScreen implements Screen {
     private static final int ROW_COUNT = 2;
     private static final int COLUMN_COUNT = 4;
     
+    public static int score = 0;
     
     
     public class Box {
@@ -77,36 +78,33 @@ public class GameplayScreen implements Screen {
     public void render(float arg0) {
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        
-        
-        //float delta = Gdx.graphics.getDeltaTime();
-        
-//        for (Box[] boxRC : GameplayScreen.boxes) {
-//    		for (Box b : boxRC) {
-//        		
-//    			if (b.hasCircle) {
-//    				//System.out.println(delta * 5.0f);
-//    				b.circleRadius += delta * 30.0f;
-//    			}
-//    			
-//    		}
-//    	}
         
         
         
         
+        drawRectangles();
+        
+        drawCircles();
+        
+        
+        float delta = Gdx.graphics.getDeltaTime();
+        
+        updateTimes(delta);
+        
+        
+        growCircles(delta);
         
         
         
         
-
-        shapeBatch.begin(ShapeType.Line);
-
+//		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+//		stage.draw();
+    }
+    
+    
+    private void drawRectangles() {
+    	shapeBatch.begin(ShapeType.Line);
         shapeBatch.setColor(Color.BLACK);
-        //shapeBatch.rect(0, 0, 100, 50);
-
-        
         
         for (int i = 0; i < COLUMN_COUNT; i++) {
         	for (int j = 0; j < ROW_COUNT; j++) {
@@ -115,7 +113,11 @@ public class GameplayScreen implements Screen {
         }
         
         shapeBatch.end();
-        shapeBatch.begin(ShapeType.Filled);
+    }
+    
+    private void drawCircles() {
+    	shapeBatch.begin(ShapeType.Filled);
+        shapeBatch.setColor(Color.BLACK);
         
         for (int c = 0; c < COLUMN_COUNT; c++) {
         	for (int r = 0; r < ROW_COUNT; r++) {
@@ -123,20 +125,15 @@ public class GameplayScreen implements Screen {
         			int x = c*boxWidth + boxWidth/2;
         			int y = r*boxHeight + boxHeight/2;
         			
-        			//TODO
         			shapeBatch.circle(x, y, boxes[r][c].circleRadius);
         		}
         	}
         }
         
-        
-        
         shapeBatch.end();
-        
-        
-        
-        
-        float delta = Gdx.graphics.getDeltaTime();
+    }
+    
+    private void updateTimes(float delta) {
         totalTime += Gdx.graphics.getDeltaTime();
         timeSoFar += Gdx.graphics.getDeltaTime();
         if (timeSoFar > nextCircleTime) {
@@ -151,25 +148,18 @@ public class GameplayScreen implements Screen {
         	//time is 1.0 -> 2.0s?
         	nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
         }
-        
-        //update size of each circle
-        for (Box[] boxRC : GameplayScreen.boxes) {
+    }
+    
+    private void growCircles(float delta) {
+    	for (Box[] boxRC : GameplayScreen.boxes) {
     		for (Box b : boxRC) {
         		
     			if (b.hasCircle) {
-    				//System.out.println(delta * 5.0f);
-    				//TODO
-    				//b.circleRadius += delta * 30.0f;
     				b.circleRadius = b.circleRadius + delta * 10.0f;
     			}
     			
     		}
     	}
-        
-        
-        
-//		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-//		stage.draw();
     }
     
     
@@ -220,15 +210,14 @@ public class GameplayScreen implements Screen {
 
 
 
+        
+        stage = new Stage();
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        
         InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
         multiplexer.addProcessor(new GameClickListener());
         Gdx.input.setInputProcessor(multiplexer);
-
-
-
-//		stage = new Stage();
-//		Gdx.input.setInputProcessor(stage);
-//		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
     }
 
