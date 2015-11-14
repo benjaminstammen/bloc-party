@@ -79,6 +79,38 @@ public class GameplayScreen implements Screen {
 
 
     
+    
+    private float getGrowthRate() {
+    	//totalTime
+    	float growthRate = 10.0f + totalTime / 10.0f;
+    	return growthRate;
+    }
+    
+    //private static float getSpawnRate() {
+    private float generateNextSpawnTime() {
+    	//nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
+    	
+    	//totalTime
+    	//float spawnRate = 1.0f;
+    	
+    	float baseTime = 1.0f - (totalTime / 10.0f);
+    	if (baseTime < 0) {
+    		baseTime = 0;
+    	}
+    	
+    	float timeRange = 1.0f - (totalTime / 40.0f);;
+    	if (timeRange < 0.5) {
+    		timeRange = 0.5f;
+    	}
+    	
+    	
+    	float nextTime = (float) Math.random() * timeRange + baseTime;
+    	return nextTime;
+    }
+    
+    
+    
+    
     private void resetValues() {
     	gameOver = false;
 		gameOverPrompted = false;
@@ -181,7 +213,10 @@ public class GameplayScreen implements Screen {
         	//reset timers
         	timeSoFar = 0;
         	//time is 1.0 -> 2.0s?
-        	nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
+        	
+        	//TODO
+        	//nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
+        	nextCircleTime = generateNextSpawnTime();
         }
     }
     
@@ -190,7 +225,8 @@ public class GameplayScreen implements Screen {
     		for (Box b : boxRC) {
         		
     			if (b.hasCircle) {
-    				b.circleRadius = b.circleRadius + delta * 10.0f;
+    				//b.circleRadius = b.circleRadius + delta * 10.0f;
+    				b.circleRadius = b.circleRadius + delta * getGrowthRate();
     			}
     			
     		}
