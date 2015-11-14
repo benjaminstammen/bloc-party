@@ -13,6 +13,7 @@ public class BlocParty extends Game {
 	private BlocParty() {
 		//singleton
 	}
+
 	public static BlocParty getInstance() {
 		if (GAME == null) {
 			GAME = new BlocParty();

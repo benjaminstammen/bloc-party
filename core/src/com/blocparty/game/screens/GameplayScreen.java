@@ -41,6 +41,11 @@ public class GameplayScreen implements Screen {
     private final static int BTN_PANEL_LEFT_MARGIN = 200;
     private final static int BTN_PANEL_BOTTOM = 200;
 
+    private int width;
+    private int height;
+    private int boxWidth;
+    private int boxHeight;
+
 
     public GameplayScreen() {
         makeItFit();
@@ -57,10 +62,28 @@ public class GameplayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        shapeBatch.begin(ShapeType.Filled);
+        shapeBatch.begin(ShapeType.Line);
 
-        shapeBatch.setColor(Color.LIGHT_GRAY);
-        shapeBatch.rect(0, 0, 100, 50);
+        shapeBatch.setColor(Color.BLACK);
+        //shapeBatch.rect(0, 0, 100, 50);
+
+        int xDist = 0;
+        int yDist = 0;
+        int count = 0;
+        while (xDist < width) {
+            //x, y, x2, y2
+            //shapeBatch.line(xDist, yDist, );
+            yDist = 0;
+            while (yDist < height) {
+                //shapeBatch.line(xDist, yDist, xDist, yDist + boxHeight);
+                shapeBatch.rect(xDist, yDist, boxWidth, boxHeight);
+                yDist += boxHeight;
+                count++;
+            }
+            xDist += boxWidth;
+        }
+        System.out.println(count);
+
 
         shapeBatch.end();
 
@@ -78,6 +101,12 @@ public class GameplayScreen implements Screen {
 
         //hud = GameScreenHUD.create(round);
 
+
+        width = Gdx.graphics.getWidth();
+        height = Gdx.graphics.getHeight();
+
+        boxWidth = width / 4;
+        boxHeight = height / 2;
 
 
 

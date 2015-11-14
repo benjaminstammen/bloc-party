@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.blocparty.game.BlocParty;
 
 public class MenuScreen implements Screen {
 	
@@ -64,7 +65,7 @@ public class MenuScreen implements Screen {
 		levelScreen.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				GameClass.getInstance().setScreen(new GameplayScreen());
+				BlocParty.getInstance().setScreen(new GameplayScreen());
 			}
 		});
 		
