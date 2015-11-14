@@ -25,7 +25,7 @@ public class GameClickListener extends InputAdapter {
     	y = Gdx.graphics.getHeight() - y;
     	
     	
-    	System.out.println("up");
+    	//System.out.println("up");
         
     	
     	//int radius = GameplayScreen.boxWidth / 2;
@@ -35,13 +35,17 @@ public class GameClickListener extends InputAdapter {
     		for (Box b : boxRC) {
     			int centerX = b.column * GameplayScreen.boxWidth + GameplayScreen.boxWidth / 2;
         		int centerY = b.row * GameplayScreen.boxHeight + GameplayScreen.boxHeight / 2;
-        		int radius = b.circleRadius;
+        		float radius = b.circleRadius;
         		
         		if ((x-centerX)*(x-centerX) + (y-centerY)*(y-centerY) < radius*radius) {
-        			System.out.println(b.row);
-        			System.out.println(b.column);
+        			//System.out.println(b.row);
+        			//System.out.println(b.column);
+        			
+        			//clicked a circle
         			if (b.hasCircle) {
         				b.hasCircle = false;
+        				GameplayScreen.score++;
+        				System.out.println(GameplayScreen.score);
         			}
         		}
     		}
