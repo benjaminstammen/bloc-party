@@ -45,16 +45,9 @@ public class MenuScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-//		TextButton levelScreen = new TextButton("Game Play Screen", skin);
-//		//x, y, width, height
-//		levelScreen.setBounds(100, 100, 200, 40);
-//		stage.addActor(levelScreen);
-
-
 		table = new Table();
-		table.setWidth(stage.getWidth());
-		table.align(Align.center | Align.top);
-		table.setPosition(0, Gdx.graphics.getHeight());
+		table.setFillParent(true);
+		table.setDebug(true);
 
 		playButton = new TextButton("Play", skin);
 		playButton.addListener(new ChangeListener() {
@@ -73,9 +66,9 @@ public class MenuScreen implements Screen {
 		});
 
 		table.padTop(50);
-		table.add(playButton).padBottom(50);
+		table.add(playButton).height(100).width(200).padBottom(50);
 		table.row();
-		table.add(quitButton);
+		table.add(quitButton).height(100).width(200);
 
 		stage.addActor(table);
 	}
