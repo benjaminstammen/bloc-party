@@ -44,8 +44,11 @@ public class GameClickListener extends InputAdapter {
         			//clicked a circle
         			if (b.hasCircle) {
         				b.hasCircle = false;
+        				
         				GameplayScreen.score++;
-        				System.out.println(GameplayScreen.score);
+        				GameplayScreen.updateScoreLabel();
+        				
+        				//System.out.println(GameplayScreen.score);
         			}
         		}
     		}
