@@ -19,6 +19,7 @@ public class MenuScreen implements Screen {
 	private Table table;
 
 	private TextButton playButton;
+	private TextButton leadButton;
 	private TextButton quitButton;
 
 	@Override
@@ -57,6 +58,14 @@ public class MenuScreen implements Screen {
 			}
 		});
 
+		leadButton = new TextButton("Leaderboard", skin);
+		leadButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				BlocParty.getInstance().setScreen(new LeaderboardScreen());
+			}
+		});
+
 		quitButton = new TextButton("Exit", skin);
 		quitButton.addListener(new ChangeListener() {
 			@Override
@@ -67,6 +76,8 @@ public class MenuScreen implements Screen {
 
 		table.padTop(50);
 		table.add(playButton).height(100).width(200).padBottom(50);
+		table.row();
+		table.add(leadButton).height(100).width(200).padBottom(50);
 		table.row();
 		table.add(quitButton).height(100).width(200);
 
