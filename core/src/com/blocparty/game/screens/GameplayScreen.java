@@ -262,7 +262,7 @@ public class GameplayScreen implements Screen {
     
     private void gameOverPrompt() {
     	gameOverPrompted = true;
-    	
+    	BlocParty.getActionResolver().gameOver(score);
     	Dialog prompt = new Dialog("Game Over", skin, "dialog") {
 			protected void result (Object object) {
 				//GameClass.getInstance().setScreen(new LevelSelectScreen());
@@ -276,7 +276,7 @@ public class GameplayScreen implements Screen {
         prompt.text("Score: " + score);
 		prompt.button("OK", null);
         //prompt.setScale(minScale);
-        prompt.setSize(400f*minScale, 200f*minScale);
+        prompt.setSize(400f * minScale, 200f * minScale);
 		prompt.show(stage);
     }
     
