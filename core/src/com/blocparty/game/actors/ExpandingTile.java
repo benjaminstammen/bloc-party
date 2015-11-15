@@ -26,14 +26,14 @@ public class ExpandingTile extends Actor {
     private boolean active;
     private Color color;
 
-    private static InputListener tileListener = new InputListener(){
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            ExpandingTile tile = (ExpandingTile)event.getTarget();
-            tile.deactivateTile();
-            return true;
-        }
-    };
+//    private static InputListener tileListener = new InputListener(){
+//        @Override
+//        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//            ExpandingTile tile = (ExpandingTile)event.getTarget();
+//            tile.deactivateTile();
+//            return true;
+//        }
+//    };
 
     public ExpandingTile(float xPosition, float yPosition, int tileWidth, int tileHeight){
         this.tileHeight = tileHeight;
@@ -47,7 +47,7 @@ public class ExpandingTile extends Actor {
         active = false;
 
         setTouchable(Touchable.enabled);
-        addListener(tileListener);
+//        addListener(tileListener);
     }
 
     public void activateTile(float expandTime){

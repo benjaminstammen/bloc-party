@@ -45,7 +45,7 @@ public class MenuScreen implements Screen {
 		
 		batch.begin();
 		
-		//batch.draw(titleImage, colWidth * 3, rowHeight * 4);
+		batch.draw(titleImage, colWidth * 3, rowHeight * 4);
 		
 		
 		int x = colWidth * 2;
@@ -53,7 +53,7 @@ public class MenuScreen implements Screen {
 		int w = colWidth * 5;
 		int h = rowHeight * 2;
 		
-		//batch.draw(titleImage, colWidth * 3, rowHeight * 4);
+		batch.draw(titleImage, colWidth * 3, rowHeight * 4);
 		batch.draw(titleImage, x, y, w, h);
 		
 		batch.end();

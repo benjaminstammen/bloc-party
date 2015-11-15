@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -254,8 +256,22 @@ public class GameplayScreen implements Screen {
                 stage.addActor(tile);
         	}
         }
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                for (int i = 0; i < COLUMN_COUNT; i++) {
+                    for (int j = 0; j < ROW_COUNT; j++) {
+                        if(expandingTiles[j][i].equals(stage.hit(x, y, false))){
+                            expandingTiles[j][i].deactivateTile();
+                            return true;
+                        }
+                    }
+                }
 
-        Gdx.input.setInputProcessor(stage);
+                gameOver = true;
+                return false;
+            }
+        });
         
         scoreLabel = new Label("Score: 0", skin);
         scoreLabel.setPosition(20, height - 40);
