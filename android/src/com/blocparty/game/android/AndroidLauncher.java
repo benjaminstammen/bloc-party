@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -31,6 +29,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		super.onCreate(savedInstanceState);
         RelativeLayout layout = new RelativeLayout(this);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+        config.numSamples = 2;
 		BlocParty blocParty = BlocParty.getInstance(this, this);
 		gameView = initializeForView(blocParty, config);
         layout.addView(gameView);
