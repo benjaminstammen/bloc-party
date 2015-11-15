@@ -1,27 +1,38 @@
 package com.blocparty.game.android;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.blocparty.game.ActionResolver;
 import com.blocparty.game.BlocParty;
+import com.blocparty.game.ConfirmInterface;
+import com.blocparty.game.RequestHandler;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 
-public class AndroidLauncher extends AndroidApplication implements ActionResolver, GameHelper.GameHelperListener {
+public class AndroidLauncher extends AndroidApplication implements ActionResolver, GameHelper.GameHelperListener, RequestHandler {
 
 	private GameHelper gameHelper;
+    private View gameView;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		BlocParty blocParty = BlocParty.getInstance(this);
-		initialize(blocParty, config);
+        RelativeLayout layout = new RelativeLayout(this);
+        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		BlocParty blocParty = BlocParty.getInstance(this, this);
+		gameView = initializeForView(blocParty, config);
+        layout.addView(gameView);
+        setContentView(layout);
 
 		if (gameHelper == null) {
 			gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
@@ -129,4 +140,22 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	public void onSignInSucceeded() {
 
 	}
+
+    @Override
+    public void confirm(final ConfirmInterface confirmInterface) {
+        gameView.post(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(AndroidLauncher.this)
+                        .setTitle("Game Over")
+                        .setNeutralButton("Continue", new Dialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                confirmInterface.yes();
+                                dialogInterface.cancel();
+                            }
+                }).create().show();
+            }
+        });
+    }
 }

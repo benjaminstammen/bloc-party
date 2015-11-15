@@ -10,15 +10,17 @@ public class BlocParty extends Game {
 
 	private static BlocParty GAME = null;
 	private static ActionResolver actionResolver;
+    private static RequestHandler requestHandler;
 
-	private BlocParty(ActionResolver resolver) {
+	private BlocParty(ActionResolver resolver, RequestHandler handler) {
 		actionResolver = resolver;
+        requestHandler = handler;
 		//singleton
 	}
 
-	public static BlocParty getInstance(ActionResolver resolver) {
+	public static BlocParty getInstance(ActionResolver resolver, RequestHandler handler) {
 		if (GAME == null) {
-			GAME = new BlocParty(resolver);
+			GAME = new BlocParty(resolver, handler);
 		}
 		return GAME;
 	}
@@ -27,6 +29,10 @@ public class BlocParty extends Game {
 
 		return GAME;
 	}
+
+    public static RequestHandler getRequestHandler() {
+        return requestHandler;
+    }
 
     public static ActionResolver getActionResolver() {
         return actionResolver;

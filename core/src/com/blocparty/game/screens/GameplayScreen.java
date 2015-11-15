@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.blocparty.game.BlocParty;
+import com.blocparty.game.ConfirmInterface;
 import com.blocparty.game.screens.GameplayScreen.Box;
 import com.blocparty.game.utilities.GameClickListener;
 
@@ -263,22 +264,17 @@ public class GameplayScreen implements Screen {
     private void gameOverPrompt() {
     	gameOverPrompted = true;
     	BlocParty.getActionResolver().gameOver(score);
-    	Dialog prompt = new Dialog("Game Over", skin, "dialog") {
-			protected void result (Object object) {
-				//GameClass.getInstance().setScreen(new LevelSelectScreen());
-				//System.gc();
-				BlocParty.getInstance().setScreen(new MenuScreen());
-//				gameOver = false;
-//				gameOverPrompted = false;
-			}
-		};
-        System.out.println(minScale);
-        //prompt.setScale(minScale);
-		prompt.show(stage);
-        prompt.setSize(400f * minScale, 200f * minScale);
-        prompt.text("Score: " + score).setScale(minScale, minScale);
-        prompt.button("OK", null).setScale(minScale, minScale);
-        prompt.setPosition(width / 4, height / 4);
+        BlocParty.getRequestHandler().confirm(new ConfirmInterface() {
+            @Override
+            public void yes() {
+            }
+
+            @Override
+            public void no() {
+
+            }
+        });
+        BlocParty.getInstance().setScreen(new MenuScreen());
     }
     
     
