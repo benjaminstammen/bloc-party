@@ -42,7 +42,7 @@ public class GameplayScreen implements Screen {
     float nextCircleTime;
     float timeElapsed;
     float totalTime = 0;
-    
+
     private static final int ROW_COUNT = 2;
     private static final int COLUMN_COUNT = 4;
     
@@ -95,6 +95,10 @@ public class GameplayScreen implements Screen {
                 }
             }
         }
+    }
+
+    public float getExpandTime() {
+        return 25f / (float) Math.pow(totalTime + 40, 0.5f) + 1;
     }
 
     public static void updateScoreLabel() {
@@ -175,7 +179,7 @@ public class GameplayScreen implements Screen {
         int row = (int) (Math.random() * 2);
 
         if (!expandingTiles[row][column].isActive()) {
-            expandingTiles[row][column].activateTile(5);
+            expandingTiles[row][column].activateTile(getExpandTime());
         }
     }
 
