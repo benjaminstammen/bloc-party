@@ -37,7 +37,7 @@ public class MenuScreen implements Screen {
 	private TextButton textButton;
 	private BitmapFont font;
 
-	Texture titleImage = new Texture("TitleText.PNG");
+	Texture titleImage = new Texture("title.png");
 	SpriteBatch batch;
 
 	@Override
@@ -59,17 +59,14 @@ public class MenuScreen implements Screen {
 		
 		batch.begin();
 		
-		batch.draw(titleImage, colWidth * 3, rowHeight * 4);
 		
-		
-		int x = colWidth * 2;
+		float x = colWidth / 2;
 		int y = rowHeight * 5;
-		int w = colWidth * 5;
+		int w = colWidth * 8;
 		int h = rowHeight * 2;
-		
-		batch.draw(titleImage, colWidth * 3, rowHeight * 4);
+
 		batch.draw(titleImage, x, y, w, h);
-		
+
 		batch.end();
 		
 		
