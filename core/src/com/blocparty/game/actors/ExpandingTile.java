@@ -90,6 +90,8 @@ public class ExpandingTile extends Actor {
 
     public void draw(ShapeRenderer shapeBatch){
         //shapeBatch.circle(this.getX(), this.getY(), getScale() * (tileWidth / 2));
+        shapeBatch.setColor(Color.DARK_GRAY);
+        shapeBatch.rect(this.getX() + 30 * getScale(), this.getY() - 30 * getScale(), getWidth(), getHeight());
         shapeBatch.setColor(color);
         shapeBatch.rect(this.getX(), this.getY(), getWidth(), getHeight());
     }
