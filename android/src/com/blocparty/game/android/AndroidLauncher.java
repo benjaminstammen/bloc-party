@@ -69,24 +69,22 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	}
 
     @Override
-    public void gameStarted() {
+    public void gameOver(int score)
+    {
         SharedPreferences prefs = getSharedPreferences(Constants.PREFS, MODE_PRIVATE);
         int gameCount = prefs.getInt(Constants.GAME_COUNT, 0);
         gameCount++;
         SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFS, MODE_PRIVATE).edit();
         editor.putInt(Constants.GAME_COUNT, gameCount);
         editor.commit();
-    }
-
-    @Override
-    public void gameOver(int score)
-    {
         if (getSignedInGPGS()) {
             Log.d("gameOver", "game finished");
             submitScoreGPGS(score);
             if (score >= 50) unlockAchievementGPGS(Constants.GET_50);
             if (score >= 100) unlockAchievementGPGS(Constants.GET_100);
             if (score >= 500) unlockAchievementGPGS(Constants.GET_500);
+
+            if (gameCount == 1) unlockAchievementGPGS(Constants.PLAY_1);
         }
     }
 

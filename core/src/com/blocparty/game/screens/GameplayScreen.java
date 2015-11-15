@@ -275,10 +275,10 @@ public class GameplayScreen implements Screen {
         System.out.println(minScale);
         //prompt.setScale(minScale);
 		prompt.show(stage);
-        prompt.setSize(400f*minScale, 200f*minScale);
+        prompt.setSize(400f * minScale, 200f * minScale);
         prompt.text("Score: " + score).setScale(minScale, minScale);
         prompt.button("OK", null).setScale(minScale, minScale);
-        prompt.setPosition(width/4, height/4);
+        prompt.setPosition(width / 4, height / 4);
     }
     
     
