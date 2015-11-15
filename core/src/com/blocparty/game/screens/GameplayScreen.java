@@ -1,6 +1,7 @@
 package com.blocparty.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -35,7 +36,8 @@ public class GameplayScreen implements Screen {
     float minScale = 1.0f;
 	float maxScale = 1.0f;
     
-    
+    float x_coord = 0f;
+    float y_coord = 0f;
 
     private int width;
     private int height;
@@ -124,6 +126,10 @@ public class GameplayScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            BlocParty.getInstance().setScreen(new MenuScreen());
+        }
+
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -139,10 +145,15 @@ public class GameplayScreen implements Screen {
 
         if (!gameOver) {
             update(delta);
+        } else {
+            shapeBatch.begin(ShapeType.Filled);
+            shapeBatch.setColor(Color.WHITE);
+            shapeBatch.circle(x_coord, y_coord, 10 * minScale);
+            shapeBatch.end();
         }
 
         if (gameOver && !gameOverPrompted) {
-        	gameOverPrompt();
+            gameOverPrompt();
         }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -300,6 +311,9 @@ public class GameplayScreen implements Screen {
                     }
                 }
 
+                x_coord = x;
+                y_coord = y;
+
                 gameOver = true;
                 return false;
             }
@@ -337,5 +351,6 @@ public class GameplayScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setCatchBackKey(true);
     }
 }
