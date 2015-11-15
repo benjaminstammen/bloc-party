@@ -12,5 +12,7 @@ public class Constants {
 
     public static final String LEADERBOARD_ID = "CgkIxsDjo9gGEAIQAg";
     public static final String GET_50 = "CgkIxsDjo9gGEAIQAA";
+    public static final String GET_100 = "CgkIxsDjo9gGEAIQBA";
+    public static final String GET_500 = "CgkIxsDjo9gGEAIQBQ";
 
 }
