@@ -84,7 +84,8 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
             if (score >= 100) unlockAchievementGPGS(Constants.GET_100);
             if (score >= 500) unlockAchievementGPGS(Constants.GET_500);
 
-            if (gameCount == 1) unlockAchievementGPGS(Constants.PLAY_1);
+            if (gameCount >= 1) unlockAchievementGPGS(Constants.PLAY_1);
+            if (gameCount >= 10) unlockAchievementGPGS(Constants.PLAY_10);
         }
     }
 
