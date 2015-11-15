@@ -8,6 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.blocparty.game.utilities.Constants;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by sfotm on 11/14/15.
@@ -26,14 +30,7 @@ public class ExpandingTile extends Actor {
     private boolean active;
     private Color color;
 
-//    private static InputListener tileListener = new InputListener(){
-//        @Override
-//        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//            ExpandingTile tile = (ExpandingTile)event.getTarget();
-//            tile.deactivateTile();
-//            return true;
-//        }
-//    };
+    Random rand;
 
     public ExpandingTile(float xPosition, float yPosition, int tileWidth, int tileHeight){
         this.tileHeight = tileHeight;
@@ -47,6 +44,8 @@ public class ExpandingTile extends Actor {
         active = false;
 
         setTouchable(Touchable.enabled);
+
+        rand = new Random();
 //        addListener(tileListener);
     }
 
@@ -55,7 +54,7 @@ public class ExpandingTile extends Actor {
 
         active = true;
         timeElapsed = 0;
-        this.color = getColor();
+        color = randomColor();
     }
 
     public void deactivateTile(){
@@ -72,7 +71,7 @@ public class ExpandingTile extends Actor {
         timeElapsed += delta;
         this.setWidth(getScale() * tileWidth);
         this.setHeight(getScale() * tileHeight);
-        this.setBounds(xOriginal - getWidth()/2, yOriginal - getHeight()/2, getWidth(), getHeight());
+        this.setBounds(xOriginal - getWidth() / 2, yOriginal - getHeight() / 2, getWidth(), getHeight());
     }
 
     public float getScale(){
@@ -89,12 +88,14 @@ public class ExpandingTile extends Actor {
 
     public void draw(ShapeRenderer shapeBatch){
         //shapeBatch.circle(this.getX(), this.getY(), getScale() * (tileWidth / 2));
-        shapeBatch.rect(this.getX()/* - getWidth()/2*/, this.getY()/* - getHeight()/2*/, getWidth(), getHeight());
+        shapeBatch.setColor(color);
+        shapeBatch.rect(this.getX(), this.getY(), getWidth(), getHeight());
     }
 
     private Color randomColor(){
+
         // TODO: create a random assortment of colors to assign
-        return Color.BLACK;
+        return Constants.COLOR_LIST.get(rand.nextInt(Constants.COLOR_LIST.size()));
     }
 
     private void spawnParticles(){
