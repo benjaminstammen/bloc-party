@@ -135,7 +135,7 @@ public class MenuScreen implements Screen {
 		//System.out.println("Help me. . . I am scared!");
 		playButton = new TextButton("Play", textButtonStyle);
 		//System.out.println("I made it!");
-		playButton.getLabel().setFontScale(3, 3);
+		playButton.getLabel().setFontScale(4, 4);
 		playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -146,7 +146,7 @@ public class MenuScreen implements Screen {
 		stage.addActor(playButton);
 
 		leadButton = new TextButton("Leaderboard", textButtonStyle);
-		leadButton.getLabel().setFontScale(3, 3);
+		leadButton.getLabel().setFontScale(4, 4);
 		leadButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

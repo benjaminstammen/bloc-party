@@ -322,10 +322,10 @@ public class GameplayScreen implements Screen {
         
         scoreLabel = new Label("Score: 0", skin);
         scoreLabel.setPosition(20, height - 40);
-        scoreLabel.setFontScale(minScale);
+        scoreLabel.setFontScale(3);
         timeLabel = new Label("Time: 0", skin);
-        timeLabel.setPosition(20, height - 80);
-        timeLabel.setFontScale(minScale);
+        timeLabel.setPosition(20, height - 100);
+        timeLabel.setFontScale(3);
         //score.setPosition(20, 20);
         stage.addActor(scoreLabel);
         stage.addActor(timeLabel);
