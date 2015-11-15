@@ -56,7 +56,6 @@ public class ExpandingTile extends Actor {
         active = true;
         timeElapsed = 0;
         this.color = getColor();
-
     }
 
     public void deactivateTile(){
@@ -77,7 +76,7 @@ public class ExpandingTile extends Actor {
     }
 
     public float getScale(){
-        return Math.min(timeElapsed / expandTime, 1);
+        return (float)Math.sqrt(Math.min(timeElapsed / expandTime, 1.0f));
     }
 
     public boolean isLoser(){

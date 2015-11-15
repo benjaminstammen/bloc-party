@@ -40,7 +40,7 @@ public class GameplayScreen implements Screen {
     public static ExpandingTile[][] expandingTiles;
 
     float nextCircleTime;
-    float timeSoFar;
+    float timeElapsed;
     float totalTime = 0;
     
     private static final int ROW_COUNT = 2;
@@ -54,21 +54,7 @@ public class GameplayScreen implements Screen {
     public static boolean gameOver = false;
     public static boolean gameOverPrompted = false;
 
-    private float generateNextSpawnTime() {
 
-    	float baseTime = 1.0f - (totalTime / 10.0f);
-    	if (baseTime < 0) {
-    		baseTime = 0;
-    	}
-    	
-    	float timeRange = 1.0f - (totalTime / 40.0f);
-    	if (timeRange < 0.5) {
-    		timeRange = 0.5f;
-    	}
-
-        // nextTime
-    	return (float) Math.random() * timeRange + baseTime;
-    }
 
     private void resetValues() {
     	gameOver = false;
@@ -78,7 +64,7 @@ public class GameplayScreen implements Screen {
 		
 		totalTime  = 0;
 		nextCircleTime = 0;
-		timeSoFar = 0;
+		timeElapsed = 0;
     }
     
     public GameplayScreen() {
@@ -115,15 +101,6 @@ public class GameplayScreen implements Screen {
         scoreLabel.setText("Score: " + score);
     }
 
-    private void spawnCircle() {
-        int column = (int) (Math.random() * 4);
-        int row = (int) (Math.random() * 2);
-
-        if (!expandingTiles[row][column].isActive()) {
-            expandingTiles[row][column].activateTile(10);
-        }
-    }
-
     @Override
     public void render(float delta) {
 
@@ -137,7 +114,7 @@ public class GameplayScreen implements Screen {
         if (!gameOver) {
             update(delta);
         }
-        
+
         if (gameOver && !gameOverPrompted) {
         	gameOverPrompt();
         }
@@ -170,28 +147,52 @@ public class GameplayScreen implements Screen {
         		}
         	}
         }
-        
         shapeBatch.end();
     }
 
     private void updateSpawnTimes(float delta) {
         totalTime += Gdx.graphics.getDeltaTime();
-        timeSoFar += Gdx.graphics.getDeltaTime();
+        timeElapsed += Gdx.graphics.getDeltaTime();
         time = (int) totalTime;
         updateTimeLabel();
-        if (timeSoFar > nextCircleTime) {
+        if (timeElapsed > nextCircleTime) {
         	//spawn the new circle
         	//System.out.println("spawn");
         	spawnCircle();
-        	
+
         	//reset timers
-        	timeSoFar = 0;
+        	timeElapsed = 0;
         	//time is 1.0 -> 2.0s?
-        	
+
         	//TODO
         	//nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
         	nextCircleTime = generateNextSpawnTime();
         }
+    }
+
+    private void spawnCircle() {
+        int column = (int) (Math.random() * 4);
+        int row = (int) (Math.random() * 2);
+
+        if (!expandingTiles[row][column].isActive()) {
+            expandingTiles[row][column].activateTile(10);
+        }
+    }
+
+    private float generateNextSpawnTime() {
+
+        float baseTime = 1.0f - (totalTime / 10.0f);
+        if (baseTime < 0) {
+            baseTime = 0;
+        }
+
+        float timeRange = 1.0f - (totalTime / 40.0f);
+        if (timeRange < 0.5) {
+            timeRange = 0.5f;
+        }
+
+        // nextTime
+        return (float) Math.random() * timeRange + baseTime;
     }
 
     public static void updateTimeLabel(){
@@ -263,6 +264,7 @@ public class GameplayScreen implements Screen {
                     for (int j = 0; j < ROW_COUNT; j++) {
                         if(expandingTiles[j][i].equals(stage.hit(x, y, false))){
                             expandingTiles[j][i].deactivateTile();
+                            score++;
                             return true;
                         }
                     }
