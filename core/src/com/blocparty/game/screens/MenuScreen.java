@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
 import com.blocparty.game.BlocParty;
 
 public class MenuScreen implements Screen {
@@ -20,7 +19,6 @@ public class MenuScreen implements Screen {
 
 	private TextButton playButton;
 	private TextButton leadButton;
-	private TextButton quitButton;
 
 	@Override
 	public void render(float delta) {
@@ -69,21 +67,10 @@ public class MenuScreen implements Screen {
 			}
 		});
 
-		quitButton = new TextButton("Exit", skin);
-		quitButton.getLabel().setFontScale(2,2);
-		quitButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.exit();
-			}
-		});
-
 		table.padTop(50);
 		table.add(playButton).height(100).width(200).padBottom(50);
 		table.row();
 		table.add(leadButton).height(100).width(200).padBottom(50);
-		table.row();
-		table.add(quitButton).height(100).width(200);
 
 		stage.addActor(table);
 	}
