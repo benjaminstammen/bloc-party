@@ -303,7 +303,7 @@ public class GameplayScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 for (int i = 0; i < COLUMN_COUNT; i++) {
                     for (int j = 0; j < ROW_COUNT; j++) {
-                        if(expandingTiles[j][i].equals(stage.hit(x, y, false))){
+                        if(expandingTiles[j][i].equals(stage.hit(x, y, false)) && expandingTiles[j][i].isActive()){
                             addParticleToDraw(expandingTiles[j][i].deactivateTile());
                             score++;
                             Gdx.input.vibrate(20);
