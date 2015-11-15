@@ -175,7 +175,7 @@ public class GameplayScreen implements Screen {
         int row = (int) (Math.random() * 2);
 
         if (!expandingTiles[row][column].isActive()) {
-            expandingTiles[row][column].activateTile(10);
+            expandingTiles[row][column].activateTile(5);
         }
     }
 
