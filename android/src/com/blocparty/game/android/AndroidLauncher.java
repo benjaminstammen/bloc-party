@@ -28,6 +28,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 			gameHelper.enableDebugLog(true);
 		}
 		gameHelper.setup(this);
+        gameHelper.setMaxAutoSignInAttempts(Integer.MAX_VALUE);
 	}
 
 	@Override
@@ -81,8 +82,11 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
     public void gameOver(int score)
     {
         if (getSignedInGPGS()) {
+            Log.d("gameOver", "game finished");
             submitScoreGPGS(score);
             if (score >= 50) unlockAchievementGPGS(Constants.GET_50);
+            if (score >= 100) unlockAchievementGPGS(Constants.GET_100);
+            if (score >= 500) unlockAchievementGPGS(Constants.GET_500);
         }
     }
 
