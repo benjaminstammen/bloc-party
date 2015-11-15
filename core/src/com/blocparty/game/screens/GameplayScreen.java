@@ -1,7 +1,6 @@
 package com.blocparty.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,9 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.blocparty.game.BlocParty;
+import com.blocparty.game.actors.ExpandingTile;
 import com.blocparty.game.ConfirmInterface;
-import com.blocparty.game.utilities.GameClickListener;
-
 
 public class GameplayScreen implements Screen {
 
@@ -36,18 +34,11 @@ public class GameplayScreen implements Screen {
     private int height;
     public static int boxWidth;
     public static int boxHeight;
-    
-    //public static ArrayList<Box> boxes;
-    //row, column
-    public static Box[][] boxes;
-    
-    
-    //boolean adjusting = false;
-	//float skyTime = 0.0f;
-	//float transparencyAchieved = 0.0f;
+
+    public static ExpandingTile[][] expandingTiles;
+
     float nextCircleTime;
     float timeSoFar;
-    float speed;
     float totalTime = 0;
     
     private static final int ROW_COUNT = 2;
@@ -58,54 +49,25 @@ public class GameplayScreen implements Screen {
     
     public static Label scoreLabel;
     public static Label timeLabel;
-    
     public static boolean gameOver = false;
     public static boolean gameOverPrompted = false;
-    
-    
-    public class Box {
-    	public int row;
-    	public int column;
-    	
-    	public float circleRadius = 20.0f;
-    	public boolean hasCircle = false;
-    }
-    
 
-
-    
-    
-    private float getGrowthRate() {
-    	//totalTime
-    	float growthRate = 10.0f + totalTime / 10.0f;
-    	return growthRate;
-    }
-    
-    //private static float getSpawnRate() {
     private float generateNextSpawnTime() {
-    	//nextCircleTime = (float) Math.random() * 1.0f + 1.0f;
-    	
-    	//totalTime
-    	//float spawnRate = 1.0f;
-    	
+
     	float baseTime = 1.0f - (totalTime / 10.0f);
     	if (baseTime < 0) {
     		baseTime = 0;
     	}
     	
-    	float timeRange = 1.0f - (totalTime / 40.0f);;
+    	float timeRange = 1.0f - (totalTime / 40.0f);
     	if (timeRange < 0.5) {
     		timeRange = 0.5f;
     	}
-    	
-    	
-    	float nextTime = (float) Math.random() * timeRange + baseTime;
-    	return nextTime;
+
+        // nextTime
+    	return (float) Math.random() * timeRange + baseTime;
     }
-    
-    
-    
-    
+
     private void resetValues() {
     	gameOver = false;
 		gameOverPrompted = false;
@@ -115,7 +77,6 @@ public class GameplayScreen implements Screen {
 		totalTime  = 0;
 		nextCircleTime = 0;
 		timeSoFar = 0;
-		//speed =?
     }
     
     public GameplayScreen() {
@@ -129,42 +90,60 @@ public class GameplayScreen implements Screen {
         makeItFit();
     }
 
+    // This is where we update the model of the tiles and see if the game must end.
+    public void update(float delta){
+
+        updateSpawnTimes(delta);
+        updateScoreLabel();
+
+        for (int c = 0; c < COLUMN_COUNT; c++) {
+            for (int r = 0; r < ROW_COUNT; r++) {
+                if (expandingTiles[r][c].isActive()) {
+                    expandingTiles[r][c].update(delta);
+                }
+                if(expandingTiles[r][c].isLoser()){
+                    gameOver = true;
+                    gameOverPrompt();
+                }
+            }
+        }
+    }
+
+    public static void updateScoreLabel() {
+        scoreLabel.setText("Score: " + score);
+    }
+
+    private void spawnCircle() {
+        int column = (int) (Math.random() * 4);
+        int row = (int) (Math.random() * 2);
+
+        if (!expandingTiles[row][column].isActive()) {
+            expandingTiles[row][column].activateTile(10);
+        }
+    }
+
     @Override
-    public void render(float arg0) {
+    public void render(float delta) {
+
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
-        
-        
+
         drawRectangles();
         
         drawCircles();
         
-        
-        float delta = Gdx.graphics.getDeltaTime();
-        
-        //updateTimes(delta);
-        
         if (!gameOver) {
-        	updateSpawnTimes(delta);
-        	growCircles(delta);
+            update(delta);
         }
-        
-        
-        checkCircleSize();
-        
         
         if (gameOver && !gameOverPrompted) {
         	gameOverPrompt();
         }
-        
-        
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.draw();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
-    
-    
+
     private void drawRectangles() {
     	shapeBatch.begin(ShapeType.Line);
         shapeBatch.setColor(Color.BLACK);
@@ -184,18 +163,15 @@ public class GameplayScreen implements Screen {
         
         for (int c = 0; c < COLUMN_COUNT; c++) {
         	for (int r = 0; r < ROW_COUNT; r++) {
-        		if (boxes[r][c].hasCircle) {
-        			int x = c*boxWidth + boxWidth/2;
-        			int y = r*boxHeight + boxHeight/2;
-        			
-        			shapeBatch.circle(x, y, boxes[r][c].circleRadius);
+        		if (expandingTiles[r][c].isActive()) {
+                    expandingTiles[r][c].draw(shapeBatch);
         		}
         	}
         }
         
         shapeBatch.end();
     }
-    
+
     private void updateSpawnTimes(float delta) {
         totalTime += Gdx.graphics.getDeltaTime();
         timeSoFar += Gdx.graphics.getDeltaTime();
@@ -215,51 +191,9 @@ public class GameplayScreen implements Screen {
         	nextCircleTime = generateNextSpawnTime();
         }
     }
-    
-    private void growCircles(float delta) {
-    	for (Box[] boxRC : GameplayScreen.boxes) {
-    		for (Box b : boxRC) {
-        		
-    			if (b.hasCircle) {
-    				//b.circleRadius = b.circleRadius + delta * 10.0f;
-    				b.circleRadius = b.circleRadius + delta * getGrowthRate();
-    			}
-    			
-    		}
-    	}
-    }
-    
-    
-    private void spawnCircle() {
-    	int column = (int) (Math.random() * 4);
-    	int row = (int) (Math.random() * 2);
-    	
-    	if (!boxes[row][column].hasCircle) {
-    		boxes[row][column].hasCircle = true;
-        	boxes[row][column].circleRadius = 30;
-    	}
-    }
-    
-    
-    public static void updateScoreLabel() {
-    	scoreLabel.setText("Score: " + score);
-    }
 
     public static void updateTimeLabel(){
         timeLabel.setText("Time: " + time);
-    }
-    
-    
-    private void checkCircleSize() {
-    	for (Box[] boxRC : GameplayScreen.boxes) {
-    		for (Box b : boxRC) {
-    			if (b.hasCircle) {
-    				if (b.circleRadius > boxWidth / 2) {
-    					gameOver = true;
-    				}
-    			}
-    		}
-    	}
     }
     
     private void gameOverPrompt() {
@@ -287,7 +221,6 @@ public class GameplayScreen implements Screen {
     	float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
     	float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
     	
-    	
     	if (scaleW < scaleH) {
     		minScale = scaleW;
     		maxScale = scaleH;
@@ -295,48 +228,34 @@ public class GameplayScreen implements Screen {
     		minScale = scaleH;
     		maxScale = scaleW;
     	}
-    	
-    	
-    	
-    	
+
     	batch = new SpriteBatch();
         shapeBatch = new ShapeRenderer();
 
         //hud = GameScreenHUD.create(round);
-
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
         boxWidth = width / COLUMN_COUNT;
         boxHeight = height / ROW_COUNT;
-        
-        
-        
-        
-        //boxes = new ArrayList<Box>();
-        boxes = new Box[2][4];
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+
+        expandingTiles = new ExpandingTile[2][4];
+
         for (int i = 0; i < COLUMN_COUNT; i++) {
         	for (int j = 0; j < ROW_COUNT; j++) {
-        		Box b = new Box();
-        		b.row = j;
-        		b.column = i;
-        		//boxes.add(b);
-        		boxes[j][i] = b;
+        		ExpandingTile tile = new ExpandingTile(i * boxWidth + boxWidth / 2, j * boxHeight + boxHeight / 2, boxWidth, boxHeight);
+        		expandingTiles[j][i] = tile;
+                stage.addActor(tile);
         	}
         }
-        
-        
 
-        
-        stage = new Stage();
-        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-        
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(stage);
-        multiplexer.addProcessor(new GameClickListener());
-        Gdx.input.setInputProcessor(multiplexer);
-        
+        Gdx.input.setInputProcessor(stage);
         
         scoreLabel = new Label("Score: 0", skin);
         scoreLabel.setPosition(20, height - 40);
@@ -347,27 +266,27 @@ public class GameplayScreen implements Screen {
         //score.setPosition(20, 20);
         stage.addActor(scoreLabel);
         stage.addActor(timeLabel);
-        
-        
     }
-
-
 
     //===========================================
 
     @Override
     public void dispose() {
     }
+
     @Override
     public void hide() {
     }
+
     @Override
     public void pause() {
     }
+
     @Override
     public void resume() {
         BlocParty.getInstance().setScreen(new MenuScreen());
     }
+
     @Override
     public void show() {
     }
