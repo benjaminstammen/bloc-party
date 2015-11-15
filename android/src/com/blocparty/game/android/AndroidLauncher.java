@@ -146,7 +146,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
         gameView.post(new Runnable() {
             @Override
             public void run() {
-                new AlertDialog.Builder(AndroidLauncher.this)
+                new AlertDialog.Builder(AndroidLauncher.this, R.style.AppCompatAlertDialogStyle)
                         .setTitle("Game Over")
                         .setNeutralButton("Continue", new Dialog.OnClickListener() {
                             @Override

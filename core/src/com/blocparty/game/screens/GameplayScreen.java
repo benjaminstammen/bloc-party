@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.blocparty.game.BlocParty;
 import com.blocparty.game.ConfirmInterface;
+import com.blocparty.game.RequestHandler;
 import com.blocparty.game.screens.GameplayScreen.Box;
 import com.blocparty.game.utilities.GameClickListener;
 
@@ -267,6 +268,12 @@ public class GameplayScreen implements Screen {
         BlocParty.getRequestHandler().confirm(new ConfirmInterface() {
             @Override
             public void yes() {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        BlocParty.getInstance().setScreen(new MenuScreen());
+                    }
+                });
             }
 
             @Override
@@ -274,7 +281,6 @@ public class GameplayScreen implements Screen {
 
             }
         });
-        BlocParty.getInstance().setScreen(new MenuScreen());
     }
     
     
