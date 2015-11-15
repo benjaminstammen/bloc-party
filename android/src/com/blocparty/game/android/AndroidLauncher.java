@@ -80,6 +80,9 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
         if (getSignedInGPGS()) {
             Log.d("gameOver", "game finished");
             submitScoreGPGS(score);
+
+            if (score == 0) unlockAchievementGPGS(Constants.ZERO_FINISH);
+
             if (score >= 50) unlockAchievementGPGS(Constants.GET_50);
             if (score >= 100) unlockAchievementGPGS(Constants.GET_100);
             if (score >= 500) unlockAchievementGPGS(Constants.GET_500);

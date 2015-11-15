@@ -18,4 +18,6 @@ public class Constants {
     public static final String PLAY_1 = "CgkIxsDjo9gGEAIQBg";
     public static final String PLAY_10 = "CgkIxsDjo9gGEAIQAQ";
 
+    public static final String ZERO_FINISH = "CgkIxsDjo9gGEAIQBw";
+
 }
