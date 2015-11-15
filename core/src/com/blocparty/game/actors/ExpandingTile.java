@@ -20,6 +20,9 @@ public class ExpandingTile extends Actor {
     private int tileHeight;
     private int tileWidth;
 
+    private float xOriginal;
+    private float yOriginal;
+
     private boolean active;
     private Color color;
 
@@ -27,15 +30,19 @@ public class ExpandingTile extends Actor {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             ExpandingTile tile = (ExpandingTile)event.getTarget();
-            Gdx.app.log("TouchEvent", "ExpandingTile received touch.");
             tile.deactivateTile();
             return true;
         }
     };
 
-    public ExpandingTile(int tileWidth, int tileHeight){
+    public ExpandingTile(float xPosition, float yPosition, int tileWidth, int tileHeight){
         this.tileHeight = tileHeight;
         this.tileWidth = tileWidth;
+
+        xOriginal = xPosition;
+        yOriginal = yPosition;
+
+        setPosition(xOriginal, yOriginal);
 
         active = false;
 
@@ -66,7 +73,7 @@ public class ExpandingTile extends Actor {
         timeElapsed += delta;
         this.setWidth(getScale() * tileWidth);
         this.setHeight(getScale() * tileHeight);
-        this.setBounds(getX(), getY(), getWidth(), getHeight());
+        this.setBounds(xOriginal - getWidth()/2, yOriginal - getHeight()/2, getWidth(), getHeight());
     }
 
     public float getScale(){
@@ -82,7 +89,8 @@ public class ExpandingTile extends Actor {
     }
 
     public void draw(ShapeRenderer shapeBatch){
-        shapeBatch.circle(this.getX(), this.getY(), getScale() * (tileWidth / 2));
+        //shapeBatch.circle(this.getX(), this.getY(), getScale() * (tileWidth / 2));
+        shapeBatch.rect(this.getX()/* - getWidth()/2*/, this.getY()/* - getHeight()/2*/, getWidth(), getHeight());
     }
 
     private Color randomColor(){

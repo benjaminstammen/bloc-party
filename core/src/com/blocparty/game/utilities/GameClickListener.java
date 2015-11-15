@@ -1,13 +1,6 @@
 package com.blocparty.game.utilities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.blocparty.game.screens.GameplayScreen;
-import com.blocparty.game.screens.GameplayScreen.Box;
 
 //extends InputAdapter
 //implements InputProcessor
