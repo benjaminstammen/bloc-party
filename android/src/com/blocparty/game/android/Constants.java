@@ -14,6 +14,7 @@ public class Constants {
     public static final String GET_50 = "CgkIxsDjo9gGEAIQAA";
     public static final String GET_100 = "CgkIxsDjo9gGEAIQBA";
     public static final String GET_500 = "CgkIxsDjo9gGEAIQBQ";
+    public static final String GET_1000 = "CgkIxsDjo9gGEAIQCA";
 
     public static final String PLAY_1 = "CgkIxsDjo9gGEAIQBg";
     public static final String PLAY_10 = "CgkIxsDjo9gGEAIQAQ";
