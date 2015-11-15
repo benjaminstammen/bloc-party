@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -32,9 +34,18 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		BlocParty blocParty = BlocParty.getInstance(this, this);
 		gameView = initializeForView(blocParty, config);
         layout.addView(gameView);
+
+
+//        Button buyButton = new Button(this);
+//        buyButton.setText("adsfadsfasdfa");
+//        buyButton.setLayoutParams(new ViewGroup.LayoutParams(
+//                ViewGroup.LayoutParams.WRAP_CONTENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT));
+//
+//        layout.addView(buyButton);
         setContentView(layout);
 
-		if (gameHelper == null) {
+        if (gameHelper == null) {
 			gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
 			gameHelper.enableDebugLog(true);
 		}
@@ -148,6 +159,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
             public void run() {
                 new AlertDialog.Builder(AndroidLauncher.this, R.style.Theme_AppCompat_Dialog_Alert)
                         .setTitle("Game Over")
+                        .setCancelable(false)
                         .setNeutralButton("Continue", new Dialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
