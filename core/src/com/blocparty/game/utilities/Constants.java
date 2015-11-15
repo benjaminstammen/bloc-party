@@ -14,12 +14,9 @@ public class Constants {
 
     public static final List<Color> COLOR_LIST = Collections.unmodifiableList(
             new ArrayList<Color>(){{
-                //add(Color.RED);
                 add(Color.ORANGE);
                 add(Color.YELLOW);
                 add(Color.GREEN);
-                //add(Color.BLUE);
-                //add(Color.VIOLET);
                 add(Color.PINK);
                 add(Color.CYAN);
                 add(Color.CORAL);

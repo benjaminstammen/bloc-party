@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -16,6 +17,9 @@ import com.blocparty.game.BlocParty;
 import com.blocparty.game.actors.ExpandingTile;
 import com.blocparty.game.ConfirmInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameplayScreen implements Screen {
 
     Stage stage;
@@ -23,6 +27,7 @@ public class GameplayScreen implements Screen {
 
     SpriteBatch batch;
     ShapeRenderer shapeBatch;
+    private List<ParticleEffect> particleEffects;
 
     public static int INTENDED_WIDTH = 950;
     public static int INTENDED_HEIGHT = 500;
@@ -65,6 +70,8 @@ public class GameplayScreen implements Screen {
 		totalTime  = 0;
 		nextCircleTime = 0;
 		timeElapsed = 0;
+
+        particleEffects = new ArrayList<ParticleEffect>();
     }
     
     public GameplayScreen() {
@@ -83,6 +90,15 @@ public class GameplayScreen implements Screen {
 
         updateSpawnTimes(delta);
         updateScoreLabel();
+
+        for(int i = 0; i < particleEffects.size(); i++){
+            ParticleEffect particleEffect = particleEffects.get(i);
+            particleEffect.update(delta);
+            if(particleEffect.isComplete()){
+                particleEffects.remove(i);
+                i--;
+            }
+        }
 
         for (int c = 0; c < COLUMN_COUNT; c++) {
             for (int r = 0; r < ROW_COUNT; r++) {
@@ -114,7 +130,13 @@ public class GameplayScreen implements Screen {
         drawRectangles();
         
         drawCircles();
-        
+
+        batch.begin();
+        for(ParticleEffect particleEffect : particleEffects){
+            particleEffect.draw(batch);
+        }
+        batch.end();
+
         if (!gameOver) {
             update(delta);
         }
@@ -152,6 +174,10 @@ public class GameplayScreen implements Screen {
         	}
         }
         shapeBatch.end();
+    }
+
+    public void addParticleToDraw(ParticleEffect particleEffect){
+        particleEffects.add(particleEffect);
     }
 
     private void updateSpawnTimes(float delta) {
@@ -267,7 +293,7 @@ public class GameplayScreen implements Screen {
                 for (int i = 0; i < COLUMN_COUNT; i++) {
                     for (int j = 0; j < ROW_COUNT; j++) {
                         if(expandingTiles[j][i].equals(stage.hit(x, y, false))){
-                            expandingTiles[j][i].deactivateTile();
+                            addParticleToDraw(expandingTiles[j][i].deactivateTile());
                             score++;
                             return true;
                         }

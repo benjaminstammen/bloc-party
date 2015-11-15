@@ -2,6 +2,7 @@ package com.blocparty.game.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -57,13 +58,13 @@ public class ExpandingTile extends Actor {
         color = randomColor();
     }
 
-    public void deactivateTile(){
+    public ParticleEffect deactivateTile(){
         active = false;
 //        this.setWidth(0);
 //        this.setHeight(0);
 //        this.setBounds(getX(), getY(), getWidth(), getHeight());
         // TODO: this might be a good place to launch some effects
-        spawnParticles();
+        return spawnParticles();
     }
 
     // add the time elapsed to the total and adjust width and height
@@ -93,12 +94,15 @@ public class ExpandingTile extends Actor {
     }
 
     private Color randomColor(){
-
-        // TODO: create a random assortment of colors to assign
         return Constants.COLOR_LIST.get(rand.nextInt(Constants.COLOR_LIST.size()));
     }
 
-    private void spawnParticles(){
+    private ParticleEffect spawnParticles(){
         // TODO: load and spawn particles as a part of the stage
+        ParticleEffect pe = new ParticleEffect();
+        pe.load(Gdx.files.internal("pixelBurst.party"), Gdx.files.internal(""));
+        pe.getEmitters().first().setPosition(xOriginal, yOriginal);
+        pe.start();
+        return pe;
     }
 }
