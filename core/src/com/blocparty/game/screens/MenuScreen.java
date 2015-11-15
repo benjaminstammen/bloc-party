@@ -123,9 +123,7 @@ public class MenuScreen implements Screen {
 		leadButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				//TODO
-				//BlocParty.getActionResolver().getLeaderboardGPGS();
-				//BlocParty.getInstance().setScreen(new LeaderboardScreen(BlocParty.getInstance().getActionResolver()));
+				BlocParty.getActionResolver().getLeaderboardGPGS();
 			}
 		});
 		leadButton.setBounds(colWidth * 5, rowHeight, colWidth * 3, rowHeight * 2);
