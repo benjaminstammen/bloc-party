@@ -208,8 +208,6 @@ public class GameplayScreen implements Screen {
         	//System.out.println("spawn");
         	spawnCircle();
         	
-        	
-        	
         	//reset timers
         	timeSoFar = 0;
         	//time is 1.0 -> 2.0s?
@@ -282,15 +280,8 @@ public class GameplayScreen implements Screen {
             }
         });
     }
-    
-    
-    
+
     private void makeItFit() {
-
-
-        
-    	
-    	
     	float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
     	float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
     	
