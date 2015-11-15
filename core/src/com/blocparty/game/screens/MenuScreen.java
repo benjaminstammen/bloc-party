@@ -4,14 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.blocparty.game.BlocParty;
 
 public class MenuScreen implements Screen {
@@ -22,7 +30,13 @@ public class MenuScreen implements Screen {
 
 	private TextButton playButton;
 	private TextButton leadButton;
-	
+
+	private TextureAtlas buttonsAtlas;
+	private NinePatch buttonUpNine;
+	private TextButton.TextButtonStyle textButtonStyle;
+	private TextButton textButton;
+	private BitmapFont font;
+
 	Texture titleImage = new Texture("TitleText.PNG");
 	SpriteBatch batch;
 
@@ -77,7 +91,21 @@ public class MenuScreen implements Screen {
 	private void createGUI() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		buttonsAtlas = new TextureAtlas(Gdx.files.internal("ui-green.atlas"));
+		skin = new Skin();
+		buttonUpNine = buttonsAtlas.createPatch("button_01");
+		skin.addRegions(buttonsAtlas);
+
+		//System.out.println("1");
+		font = new BitmapFont();
+		//System.out.println("2");
+		font.setColor(0, 0, 0, 0);
+
+		textButtonStyle = new TextButton.TextButtonStyle();
+		textButtonStyle.up = new NinePatchDrawable(buttonUpNine);
+
+		textButtonStyle.font = font;
+
 
 //		table = new Table();
 //		table.setFillParent(true);
@@ -103,11 +131,10 @@ public class MenuScreen implements Screen {
 //		//titleLabel.
 //		titleLabel.setPosition(colWidth * 3, rowHeight * 5);
 //		stage.addActor(titleLabel);
-		
-		
-		
 
-		playButton = new TextButton("Play", skin);
+		//System.out.println("Help me. . . I am scared!");
+		playButton = new TextButton("Play", textButtonStyle);
+		//System.out.println("I made it!");
 		playButton.getLabel().setFontScale(3, 3);
 		playButton.addListener(new ChangeListener() {
 			@Override
@@ -118,7 +145,7 @@ public class MenuScreen implements Screen {
 		playButton.setBounds(colWidth, rowHeight, colWidth * 3, rowHeight * 2);
 		stage.addActor(playButton);
 
-		leadButton = new TextButton("Leaderboard", skin);
+		leadButton = new TextButton("Leaderboard", textButtonStyle);
 		leadButton.getLabel().setFontScale(3, 3);
 		leadButton.addListener(new ChangeListener() {
 			@Override
@@ -155,5 +182,9 @@ public class MenuScreen implements Screen {
 	}
 	@Override
 	public void resume() {
+	}
+
+	public TextureRegion getRegion(String region){
+		return skin.getRegion(region);
 	}
 }
