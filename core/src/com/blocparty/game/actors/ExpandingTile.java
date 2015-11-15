@@ -102,6 +102,7 @@ public class ExpandingTile extends Actor {
         ParticleEffect pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pixelBurst.party"), Gdx.files.internal(""));
         pe.getEmitters().first().setPosition(xOriginal, yOriginal);
+        pe.getEmitters().get(0).getTint().setColors(new float[]{color.r, color.g, color.b});
         pe.start();
         return pe;
     }
