@@ -1,7 +1,5 @@
 package com.blocparty.game.screens;
 
-
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -274,10 +272,12 @@ public class GameplayScreen implements Screen {
 //				gameOverPrompted = false;
 			}
 		};
-		prompt.text("Score: " + score);
+        System.out.println(minScale);
+        prompt.text("Score: " + score);
 		prompt.button("OK", null);
+        //prompt.setScale(minScale);
+        prompt.setSize(400f*minScale, 200f*minScale);
 		prompt.show(stage);
-		prompt.setSize(200f, 100f);
     }
     
     
@@ -288,8 +288,8 @@ public class GameplayScreen implements Screen {
         
     	
     	
-    	float scaleW = Gdx.graphics.getWidth() / INTENDED_WIDTH;
-    	float scaleH = Gdx.graphics.getHeight() / INTENDED_HEIGHT;
+    	float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
+    	float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
     	
     	
     	if (scaleW < scaleH) {
@@ -365,6 +365,7 @@ public class GameplayScreen implements Screen {
     }
     @Override
     public void resume() {
+        BlocParty.getInstance().setScreen(new MenuScreen());
     }
     @Override
     public void show() {
