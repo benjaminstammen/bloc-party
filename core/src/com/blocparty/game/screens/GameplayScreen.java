@@ -306,6 +306,7 @@ public class GameplayScreen implements Screen {
                         if(expandingTiles[j][i].equals(stage.hit(x, y, false))){
                             addParticleToDraw(expandingTiles[j][i].deactivateTile());
                             score++;
+                            Gdx.input.vibrate(20);
                             return true;
                         }
                     }

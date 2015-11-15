@@ -3,6 +3,7 @@ package com.blocparty.game.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -89,6 +90,8 @@ public class ExpandingTile extends Actor {
 
     public void draw(ShapeRenderer shapeBatch){
         //shapeBatch.circle(this.getX(), this.getY(), getScale() * (tileWidth / 2));
+        shapeBatch.setColor(Color.DARK_GRAY);
+        shapeBatch.rect(this.getX() + 30 * getScale(), this.getY() - 30 * getScale(), getWidth(), getHeight());
         shapeBatch.setColor(color);
         shapeBatch.rect(this.getX(), this.getY(), getWidth(), getHeight());
     }
@@ -101,8 +104,10 @@ public class ExpandingTile extends Actor {
         // TODO: load and spawn particles as a part of the stage
         ParticleEffect pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pixelBurst.party"), Gdx.files.internal(""));
-        pe.getEmitters().first().setPosition(xOriginal, yOriginal);
-        pe.getEmitters().get(0).getTint().setColors(new float[]{color.r, color.g, color.b});
+        ParticleEmitter emitter = pe.getEmitters().first();
+        emitter.setPosition(xOriginal, yOriginal);
+        emitter.getTint().setColors(new float[]{color.r, color.g, color.b});
+        emitter.getScale().setHigh(getScale() * 150, getScale() * 200);
         pe.start();
         return pe;
     }
