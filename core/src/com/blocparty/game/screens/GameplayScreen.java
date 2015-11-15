@@ -287,7 +287,7 @@ public class GameplayScreen implements Screen {
             public void no() {
 
             }
-        });
+        }, score);
     }
 
     private void makeItFit() {

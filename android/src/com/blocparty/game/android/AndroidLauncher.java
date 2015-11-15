@@ -35,7 +35,6 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		gameView = initializeForView(blocParty, config);
         layout.addView(gameView);
 
-
 //        Button buyButton = new Button(this);
 //        buyButton.setText("adsfadsfasdfa");
 //        buyButton.setLayoutParams(new ViewGroup.LayoutParams(
@@ -153,12 +152,13 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	}
 
     @Override
-    public void confirm(final ConfirmInterface confirmInterface) {
+    public void confirm(final ConfirmInterface confirmInterface, final int score) {
         gameView.post(new Runnable() {
             @Override
             public void run() {
                 new AlertDialog.Builder(AndroidLauncher.this, R.style.Theme_AppCompat_Dialog_Alert)
                         .setTitle("Game Over")
+                        .setMessage("You scored " + Integer.toString(score) + " point(s).")
                         .setCancelable(false)
                         .setNeutralButton("Continue", new Dialog.OnClickListener() {
                             @Override

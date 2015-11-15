@@ -5,6 +5,6 @@ package com.blocparty.game;
  */
 public interface RequestHandler {
 
-    public void confirm(ConfirmInterface confirmInterface);
+    public void confirm(ConfirmInterface confirmInterface, int score);
 
 }
