@@ -60,8 +60,10 @@ public class GameplayScreen implements Screen {
     private static final int COLUMN_COUNT = 4;
     
     public static int score = 0;
+    public static int time = 0;
     
     public static Label scoreLabel;
+    public static Label timeLabel;
     
     public static boolean gameOver = false;
     public static boolean gameOverPrompted = false;
@@ -114,6 +116,7 @@ public class GameplayScreen implements Screen {
     	gameOver = false;
 		gameOverPrompted = false;
 		score = 0;
+        time = 0;
 		
 		totalTime  = 0;
 		nextCircleTime = 0;
@@ -202,6 +205,8 @@ public class GameplayScreen implements Screen {
     private void updateSpawnTimes(float delta) {
         totalTime += Gdx.graphics.getDeltaTime();
         timeSoFar += Gdx.graphics.getDeltaTime();
+        time = (int) totalTime;
+        updateTimeLabel();
         if (timeSoFar > nextCircleTime) {
         	//spawn the new circle
         	//System.out.println("spawn");
@@ -246,6 +251,10 @@ public class GameplayScreen implements Screen {
     
     public static void updateScoreLabel() {
     	scoreLabel.setText("Score: " + score);
+    }
+
+    public static void updateTimeLabel(){
+        timeLabel.setText("Time: " + time);
     }
     
     
@@ -341,8 +350,11 @@ public class GameplayScreen implements Screen {
         
         scoreLabel = new Label("Score: 0", skin);
         scoreLabel.setPosition(20, height - 40);
+        timeLabel = new Label("Time: 0", skin);
+        timeLabel.setPosition(20, height - 80);
         //score.setPosition(20, 20);
         stage.addActor(scoreLabel);
+        stage.addActor(timeLabel);
         
         
     }
