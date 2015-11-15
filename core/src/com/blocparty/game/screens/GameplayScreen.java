@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.blocparty.game.BlocParty;
 import com.blocparty.game.ConfirmInterface;
+import com.blocparty.game.RequestHandler;
 import com.blocparty.game.screens.GameplayScreen.Box;
 import com.blocparty.game.utilities.GameClickListener;
 
@@ -212,8 +213,6 @@ public class GameplayScreen implements Screen {
         	//System.out.println("spawn");
         	spawnCircle();
         	
-        	
-        	
         	//reset timers
         	timeSoFar = 0;
         	//time is 1.0 -> 2.0s?
@@ -276,6 +275,12 @@ public class GameplayScreen implements Screen {
         BlocParty.getRequestHandler().confirm(new ConfirmInterface() {
             @Override
             public void yes() {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        BlocParty.getInstance().setScreen(new MenuScreen());
+                    }
+                });
             }
 
             @Override
@@ -283,17 +288,9 @@ public class GameplayScreen implements Screen {
 
             }
         });
-        BlocParty.getInstance().setScreen(new MenuScreen());
     }
-    
-    
-    
+
     private void makeItFit() {
-
-
-        
-    	
-    	
     	float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
     	float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
     	
