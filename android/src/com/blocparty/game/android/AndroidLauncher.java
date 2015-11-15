@@ -1,7 +1,9 @@
 package com.blocparty.game.android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -66,6 +68,16 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	}
 
     @Override
+    public void gameStarted() {
+        SharedPreferences prefs = getSharedPreferences(Constants.PREFS, MODE_PRIVATE);
+        int gameCount = prefs.getInt(Constants.GAME_COUNT, 0);
+        gameCount++;
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFS, MODE_PRIVATE).edit();
+        editor.putInt(Constants.GAME_COUNT, gameCount);
+        editor.commit();
+    }
+
+    @Override
     public void gameOver(int score)
     {
         if (getSignedInGPGS()) {
@@ -86,10 +98,13 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void getLeaderboardGPGS() {
+        Log.d("GetLeaderBoard", "Getting leaderboard.");
 		if (gameHelper.isSignedIn()) {
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), Constants.LEADERBOARD_ID), 100);
+            Log.d("GetLeaderBoard", "Game Helper things we're signed in.");
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), Constants.LEADERBOARD_ID), Constants.REQUEST_LEADERBOARD);
 		} else if (!gameHelper.isConnecting()) {
-			loginGPGS();
+            Log.d("GetLeaderBoard", "Game Helper things we're signed in.");
+            loginGPGS();
 		}
 	}
 

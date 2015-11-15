@@ -11,7 +11,7 @@ public class BlocParty extends Game {
 
 
 	private static BlocParty GAME = null;
-	private ActionResolver actionResolver;
+	private static ActionResolver actionResolver;
 
 	private BlocParty(ActionResolver resolver) {
 		actionResolver = resolver;
@@ -29,6 +29,10 @@ public class BlocParty extends Game {
 
 		return GAME;
 	}
+
+    public static ActionResolver getActionResolver() {
+        return actionResolver;
+    }
 
 
 	@Override

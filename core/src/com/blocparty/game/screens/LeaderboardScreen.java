@@ -20,9 +20,10 @@ public class LeaderboardScreen implements Screen {
 
 	private ActionResolver actionResolver;
 
-	private LeaderboardScreen(ActionResolver resolver) {
+	public LeaderboardScreen(ActionResolver resolver) {
+		makeItFit();
 		actionResolver = resolver;
-		//singleton
+		this.actionResolver.getLeaderboardGPGS();
 	}
 
 	public LeaderboardScreen() {

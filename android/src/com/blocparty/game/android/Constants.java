@@ -5,6 +5,11 @@ package com.blocparty.game.android;
  */
 public class Constants {
 
+    public static final int REQUEST_LEADERBOARD = 100;
+
+    public static final String PREFS = "blocparty.game.prefs";
+    public static final String GAME_COUNT = "gamecounts.pref";
+
     public static final String LEADERBOARD_ID = "CgkIxsDjo9gGEAIQAg";
     public static final String GET_50 = "CgkIxsDjo9gGEAIQAA";
 
