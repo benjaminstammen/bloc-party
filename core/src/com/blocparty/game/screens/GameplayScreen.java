@@ -3,10 +3,13 @@ package com.blocparty.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -62,7 +65,6 @@ public class GameplayScreen implements Screen {
     public static boolean gameOverPrompted = false;
 
 
-
     private void resetValues() {
     	gameOver = false;
 		gameOverPrompted = false;
@@ -116,7 +118,7 @@ public class GameplayScreen implements Screen {
     }
 
     public float getExpandTime() {
-        return 25f / (float) Math.pow(totalTime + 40, 0.5f) + 1;
+        return 25f / (float) Math.pow(totalTime + 25f, 0.5f) + 1f;
     }
 
     public static void updateScoreLabel() {

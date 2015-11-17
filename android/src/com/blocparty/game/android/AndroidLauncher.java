@@ -96,7 +96,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
         gameCount++;
         SharedPreferences.Editor editor = getSharedPreferences(Constants.PREFS, MODE_PRIVATE).edit();
         editor.putInt(Constants.GAME_COUNT, gameCount);
-        editor.commit();
+        editor.apply();
         if (getSignedInGPGS()) {
             Log.d("gameOver", "game finished");
             submitScoreGPGS(score);
@@ -127,10 +127,10 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	public void getLeaderboardGPGS() {
         Log.d("GetLeaderBoard", "Getting leaderboard.");
 		if (gameHelper.isSignedIn()) {
-            Log.d("GetLeaderBoard", "Game Helper things we're signed in.");
+            Log.d("GetLeaderBoard", "Game Helper thinks we're signed in.");
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), Constants.LEADERBOARD_ID), Constants.REQUEST_LEADERBOARD);
 		} else if (!gameHelper.isConnecting()) {
-            Log.d("GetLeaderBoard", "Game Helper things we're signed in.");
+            Log.d("GetLeaderBoard", "Game Helper thinks we're not signed in, nor are we trying.");
             loginGPGS();
 		}
 	}

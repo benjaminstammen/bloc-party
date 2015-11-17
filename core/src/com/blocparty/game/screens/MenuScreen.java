@@ -2,6 +2,7 @@ package com.blocparty.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -9,17 +10,13 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.blocparty.game.BlocParty;
 
 public class MenuScreen implements Screen {
@@ -37,6 +34,14 @@ public class MenuScreen implements Screen {
 	private TextButton textButton;
 	private BitmapFont font;
 
+	public static final int INTENDED_WIDTH = 950;
+	public static final int INTENDED_HEIGHT = 500;
+
+	float minScale = 1.0f;
+	float maxScale = 1.0f;
+
+	private BitmapFont caviarDreamsBold;
+
 	Texture titleImage = new Texture("title.png");
 	SpriteBatch batch;
 
@@ -44,21 +49,15 @@ public class MenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		
 		
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
-		
-		
-		
+
 		int colWidth = width / 9;
 		
 		int rowHeight = height / 9;
-		
-		
+
 		batch.begin();
-		
 		
 		float x = colWidth / 2;
 		int y = rowHeight * 5;
@@ -68,7 +67,6 @@ public class MenuScreen implements Screen {
 		batch.draw(titleImage, x, y, w, h);
 
 		batch.end();
-		
 		
 		
 		stage.act(delta);
@@ -82,6 +80,8 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		makeItFit();
+		createFonts();
 		createGUI();
 	}
 	
@@ -101,27 +101,19 @@ public class MenuScreen implements Screen {
 		textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = new NinePatchDrawable(buttonUpNine);
 
-		textButtonStyle.font = font;
-
+		textButtonStyle.font = caviarDreamsBold;
 
 //		table = new Table();
 //		table.setFillParent(true);
 //		table.setDebug(true);
 		
-		
 		batch = new SpriteBatch();
-		
 		
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 		
-		
 		int colWidth = width / 9;
 		int rowHeight = height / 9;
-		
-		
-		
-		
 		
 //		Label titleLabel = new Label("Bloc Party", skin);
 //		titleLabel.setFontScale(5);
@@ -132,7 +124,7 @@ public class MenuScreen implements Screen {
 		//System.out.println("Help me. . . I am scared!");
 		playButton = new TextButton("Play", textButtonStyle);
 		//System.out.println("I made it!");
-		playButton.getLabel().setFontScale(4, 4);
+		//playButton.getLabel().setFontScale(4, 4);
 		playButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -143,7 +135,7 @@ public class MenuScreen implements Screen {
 		stage.addActor(playButton);
 
 		leadButton = new TextButton("Leaderboard", textButtonStyle);
-		leadButton.getLabel().setFontScale(4, 4);
+		//leadButton.getLabel().setFontScale(4, 4);
 		leadButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -160,8 +152,29 @@ public class MenuScreen implements Screen {
 
 		//stage.addActor(table);
 	}
-	
-	
+
+	private void makeItFit() {
+		float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
+		float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
+
+		if (scaleW < scaleH) {
+			minScale = scaleW;
+			maxScale = scaleH;
+		} else {
+			minScale = scaleH;
+			maxScale = scaleW;
+		}
+	}
+
+	private void createFonts() {
+		FileHandle fontFile = Gdx.files.internal("data/CaviarDreams_Bold.ttf");
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = (int) (40f * minScale);
+		caviarDreamsBold = generator.generateFont(parameter);
+		//caviarDreams.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Nearest);
+		generator.dispose();
+	}
 	
 	//===========================================
 	
@@ -170,13 +183,16 @@ public class MenuScreen implements Screen {
 		stage.dispose();
 		skin.dispose();
 	}
+
 	@Override
 	public void hide() {
 		dispose();
 	}
+
 	@Override
 	public void pause() {
 	}
+
 	@Override
 	public void resume() {
 	}
