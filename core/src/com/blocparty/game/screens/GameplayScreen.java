@@ -55,7 +55,9 @@ public class GameplayScreen implements Screen {
 
     private static final int ROW_COUNT = 2;
     private static final int COLUMN_COUNT = 4;
-    
+
+    private BitmapFont caviarDreamsBold;
+
     public static int score = 0;
     public static int time = 0;
     
@@ -82,6 +84,7 @@ public class GameplayScreen implements Screen {
     	resetValues();
     	
         makeItFit();
+        screenSetup();
     }
 
     @Override
@@ -263,19 +266,16 @@ public class GameplayScreen implements Screen {
         }, score);
     }
 
-    private void makeItFit() {
-    	float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
-    	float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
-    	
-    	if (scaleW < scaleH) {
-    		minScale = scaleW;
-    		maxScale = scaleH;
-    	} else {
-    		minScale = scaleH;
-    		maxScale = scaleW;
-    	}
+    private void screenSetup() {
+        FileHandle fontFile = Gdx.files.internal("data/CaviarDreams_Bold.ttf");
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = (int) (20f * minScale);
+        caviarDreamsBold = generator.generateFont(parameter);
+        //caviarDreams.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Nearest);
+        generator.dispose();
 
-    	batch = new SpriteBatch();
+        batch = new SpriteBatch();
         shapeBatch = new ShapeRenderer();
 
         //hud = GameScreenHUD.create(round);
@@ -294,18 +294,18 @@ public class GameplayScreen implements Screen {
         expandingTiles = new ExpandingTile[2][4];
 
         for (int i = 0; i < COLUMN_COUNT; i++) {
-        	for (int j = 0; j < ROW_COUNT; j++) {
-        		ExpandingTile tile = new ExpandingTile(i * boxWidth + boxWidth / 2, j * boxHeight + boxHeight / 2, boxWidth, boxHeight);
-        		expandingTiles[j][i] = tile;
+            for (int j = 0; j < ROW_COUNT; j++) {
+                ExpandingTile tile = new ExpandingTile(i * boxWidth + boxWidth / 2, j * boxHeight + boxHeight / 2, boxWidth, boxHeight);
+                expandingTiles[j][i] = tile;
                 stage.addActor(tile);
-        	}
+            }
         }
         stage.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 for (int i = 0; i < COLUMN_COUNT; i++) {
                     for (int j = 0; j < ROW_COUNT; j++) {
-                        if(expandingTiles[j][i].equals(stage.hit(x, y, false)) && expandingTiles[j][i].isActive()){
+                        if (expandingTiles[j][i].equals(stage.hit(x, y, false)) && expandingTiles[j][i].isActive()) {
                             addParticleToDraw(expandingTiles[j][i].deactivateTile());
                             score++;
                             Gdx.input.vibrate(20);
@@ -321,19 +321,33 @@ public class GameplayScreen implements Screen {
                 return false;
             }
         });
-        
+
         scoreLabel = new Label("Score: 0", skin);
         scoreLabel.setPosition(20, height - 40);
-        scoreLabel.setFontScale(3);
         timeLabel = new Label("Time: 0", skin);
         timeLabel.setPosition(20, height - 100);
-        timeLabel.setFontScale(3);
-        //score.setPosition(20, 20);
+
+        Label.LabelStyle scoreTimeStyle = new Label.LabelStyle();
+        scoreTimeStyle.font = caviarDreamsBold;
+        scoreLabel.setStyle(scoreTimeStyle);
+        timeLabel.setStyle(scoreTimeStyle);
+
         stage.addActor(scoreLabel);
         stage.addActor(timeLabel);
     }
 
-    //===========================================
+    private void makeItFit() {
+    	float scaleW = (float) Gdx.graphics.getWidth() / (float) INTENDED_WIDTH;
+    	float scaleH = (float) Gdx.graphics.getHeight() / (float) INTENDED_HEIGHT;
+    	
+    	if (scaleW < scaleH) {
+    		minScale = scaleW;
+    		maxScale = scaleH;
+    	} else {
+    		minScale = scaleH;
+    		maxScale = scaleW;
+    	}
+    }
 
     @Override
     public void dispose() {
