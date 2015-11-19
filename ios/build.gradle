@@ -7,6 +7,10 @@ ext {
 	mainClassName = "com.blocparty.game.ios.IOSLauncher"
 }
 
+dependencies {
+    compile "org.robovm:robopods-google-play-games-ios:1.9.0"
+}
+
 launchIPhoneSimulator.dependsOn build
 launchIPadSimulator.dependsOn build
 launchIOSDevice.dependsOn build

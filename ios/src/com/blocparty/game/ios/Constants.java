@@ -1,7 +1,7 @@
-package com.blocparty.game.android;
+package com.blocparty.game.ios;
 
 /**
- * Created by jkahn on 11/14/15.
+ * Created by jkahn on 11/18/15.
  */
 public class Constants {
 
@@ -20,5 +20,7 @@ public class Constants {
     protected static final String PLAY_10 = "CgkIxsDjo9gGEAIQAQ";
 
     protected static final String ZERO_FINISH = "CgkIxsDjo9gGEAIQBw";
+
+    protected static final String CLIENT_ID = "229855780934.apps.googleusercontent.com";
 
 }
