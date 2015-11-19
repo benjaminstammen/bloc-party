@@ -1,0 +1,285 @@
+{
+	"archiveVersion" = "1";
+	"classes" =
+		{
+		};
+	"objectVersion" = "46";
+	"objects" =
+		{
+			"100000000000000000000002" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("568E969BD44B4779B1ED78B6", "0BC35ABB076244CA98B0E522");
+					"sourceTree" = "<group>";
+				};
+			"100000000000000000000006" =
+				{
+					"isa" = "PBXNativeTarget";
+					"buildPhases" =
+						("100000000000000000000007");
+					"buildRules" =
+						();
+					"dependencies" =
+						();
+					"name" = "test";
+					"productName" = "test";
+					"productType" = "com.apple.product-type.application";
+				};
+			"100000000000000000000001" =
+				{
+					"isa" = "PBXProject";
+					"attributes" =
+						{
+							"LastUpgradeCheck" = "0620";
+						};
+					"buildConfigurationList" = "100000000000000000000003";
+					"compatibilityVersion" = "Xcode 3.2";
+					"developmentRegion" = "English";
+					"hasScannedForEncodings" = "0";
+					"knownRegions" =
+						("en");
+					"mainGroup" = "100000000000000000000002";
+					"projectDirPath" = "";
+					"projectRoot" = "";
+					"targets" =
+						("100000000000000000000006");
+				};
+			"100000000000000000000007" =
+				{
+					"isa" = "PBXSourcesBuildPhase";
+					"buildActionMask" = "2147483647";
+					"files" =
+						();
+					"runOnlyForDeploymentPostprocessing" = "0";
+				};
+			"100000000000000000000004" =
+				{
+					"isa" = "XCBuildConfiguration";
+					"buildSettings" =
+						{
+							"INFOPLIST_FILE" = "/Users/jkahn/Git/BlocParty/ios/Info.plist.xml";
+							"SDKROOT" = "iphoneos";
+							"TARGETED_DEVICE_FAMILY" = "1,2";
+							"GCC_PRECOMPILE_PREFIX_HEADER" = "YES";
+							"GCC_PREFIX_HEADER" = "/Users/jkahn/Git/BlocParty/ios/robovm-build/xcode/.ib/Prefix.pch";
+						};
+					"name" = "Debug";
+				};
+			"100000000000000000000005" =
+				{
+					"isa" = "XCBuildConfiguration";
+					"buildSettings" =
+						{
+							"INFOPLIST_FILE" = "/Users/jkahn/Git/BlocParty/ios/Info.plist.xml";
+							"SDKROOT" = "iphoneos";
+							"TARGETED_DEVICE_FAMILY" = "1,2";
+							"GCC_PRECOMPILE_PREFIX_HEADER" = "YES";
+							"GCC_PREFIX_HEADER" = "/Users/jkahn/Git/BlocParty/ios/robovm-build/xcode/.ib/Prefix.pch";
+						};
+					"name" = "Release";
+				};
+			"100000000000000000000003" =
+				{
+					"isa" = "XCConfigurationList";
+					"buildConfigurations" =
+						("100000000000000000000004", "100000000000000000000005");
+					"defaultConfigurationIsVisible" = "0";
+					"defaultConfigurationName" = "Release";
+				};
+			"C7354258521A4F7D8E0B1189" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default-375w-667h@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default-375w-667h@2x.png";
+				};
+			"568E969BD44B4779B1ED78B6" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("7ACB25C9C12B4D53A07C672F", "C7354258521A4F7D8E0B1189", "F49C3587722B4AA7BCD57D04",
+ "8B64810A6C174E2A8AA7E7B8", "6D776CDFC7BE4921B6C4F779", "DE7EC0E2B4D6406B8DF94F90",
+ "B6EC8E78413848A68B94EA68", "6A14D872EC1A436BBF991587", "45974C0479CA49A084411906",
+ "45682C2278E741709BA29788", "1798CA475BDB44A1982F0678", "9DF81E0944CC459B92E8280A",
+ "97DE0BD2032F432180F7FC8D", "823EA96577184357BB94DEDD", "7597D9F0DD7E40319BF8F482",
+ "1861B106669E4BF0B97942EC");
+					"name" = "Resources";
+					"sourceTree" = "<absolute>";
+					"path" = "/Users/jkahn/Git/BlocParty/ios/data";
+				};
+			"F49C3587722B4AA7BCD57D04" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default-414w-736h@3x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default-414w-736h@3x.png";
+				};
+			"8B64810A6C174E2A8AA7E7B8" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default-568h@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default-568h@2x.png";
+				};
+			"6D776CDFC7BE4921B6C4F779" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default.png";
+				};
+			"DE7EC0E2B4D6406B8DF94F90" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default@2x.png";
+				};
+			"B6EC8E78413848A68B94EA68" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default@2x~ipad.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default@2x~ipad.png";
+				};
+			"6A14D872EC1A436BBF991587" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Default~ipad.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Default~ipad.png";
+				};
+			"45974C0479CA49A084411906" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon-72.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon-72.png";
+				};
+			"45682C2278E741709BA29788" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon-72@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon-72@2x.png";
+				};
+			"1798CA475BDB44A1982F0678" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon.png";
+				};
+			"9DF81E0944CC459B92E8280A" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Icon@2x.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "Icon@2x.png";
+				};
+			"76AE7B7B4F4E4845B827D03C" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "Info.plist";
+					"explicitFileType" = "text.plist.info";
+					"sourceTree" = "<group>";
+					"path" = "Info.plist.xml";
+				};
+			"0BC35ABB076244CA98B0E522" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("76AE7B7B4F4E4845B827D03C");
+					"name" = "Supporting Files";
+					"sourceTree" = "<absolute>";
+					"path" = "/Users/jkahn/Git/BlocParty/ios";
+				};
+			"823EA96577184357BB94DEDD" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "title.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "title.png";
+				};
+			"5BA392A269F948D887FE1B7A" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "CaviarDreams_Bold.ttf";
+					"lastKnownFileType" = "file";
+					"sourceTree" = "<group>";
+					"path" = "CaviarDreams_Bold.ttf";
+				};
+			"7ACB25C9C12B4D53A07C672F" =
+				{
+					"isa" = "PBXGroup";
+					"children" =
+						("C450E5836BE24B0C90AA2CB0", "5BA392A269F948D887FE1B7A", "74010B45488943C4B92D6FB7",
+ "3548AA7810154BBB84E20BA3");
+					"name" = "data";
+					"sourceTree" = "<group>";
+					"path" = "data";
+				};
+			"97DE0BD2032F432180F7FC8D" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "square.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "square.png";
+				};
+			"7597D9F0DD7E40319BF8F482" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "ui-green.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "ui-green.png";
+				};
+			"1861B106669E4BF0B97942EC" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "uiskin.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "uiskin.png";
+				};
+			"C450E5836BE24B0C90AA2CB0" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "CaviarDreams.ttf";
+					"lastKnownFileType" = "file";
+					"sourceTree" = "<group>";
+					"path" = "CaviarDreams.ttf";
+				};
+			"74010B45488943C4B92D6FB7" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "default.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "default.png";
+				};
+			"3548AA7810154BBB84E20BA3" =
+				{
+					"isa" = "PBXFileReference";
+					"name" = "uiskin.png";
+					"lastKnownFileType" = "image.png";
+					"sourceTree" = "<group>";
+					"path" = "uiskin.png";
+				};
+		};
+	"rootObject" = "100000000000000000000001";
+}
